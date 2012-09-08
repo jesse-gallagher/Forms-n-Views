@@ -3,6 +3,7 @@ package frostillicus;
 import java.io.Serializable;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class TabIndexManager implements Serializable {
 	private static final long serialVersionUID = -5660266795488183762L;
 

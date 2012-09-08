@@ -111,3 +111,14 @@ table textarea.code {
 .iconForms, .iconForm { background-image: url("tango/text-x-generic-16x16.png"); }
 .iconHome { background-image: url("tango/go-home-16x16.png"); }
 .iconStylesheets, .iconStylesheet { background-image: url("tango/font-x-generic-16x16.png"); }
+
+/* DXL preview area */
+.dxlPreview {
+	margin-top: 1em;
+}
+.dxlPreview .dxl {
+	display: block;
+	font-family: monospace;
+	font-size: 12px;
+	white-space: pre;
+}

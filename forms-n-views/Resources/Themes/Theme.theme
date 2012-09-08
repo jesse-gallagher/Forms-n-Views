@@ -10,6 +10,8 @@
 		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/soria/soria.css"/>
 <!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/nihilo/nihilo.css"/>-->
 		
+		<dojoModule name="dijit.TitlePane"/>
+		
 		<dojoModule name="dojox.widget.Toaster"/>
 		<styleSheet href="/.ibmxspres/dojoroot/dojox/widget/Toaster/Toaster.css"/>
 		

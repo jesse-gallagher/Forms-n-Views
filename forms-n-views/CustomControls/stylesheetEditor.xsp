@@ -49,12 +49,11 @@
 			</xe:formRow>
 		</xe:formTable>
 
-		<xp:button id="refreshMe" value="Refresh Me">
-<!--			<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="editorPanel" />-->
-			<xp:eventHandler event="onclick" themeId="Editor.Refresh"/>
-		</xp:button>
-		
-		
-		<xp:text value="#{designNote.xml}" style="display: block; font-family: monospace; font-size: 12px; white-space: pre"/>
+		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview">
+			<xp:button id="refreshMe" value="Refresh">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
+			</xp:button>
+			<xp:text value="#{designNote.xml}" styleClass="dxl"/>
+		</xc:djTitlePane>
 	</xp:panel>
 </xp:view>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
-
-	this is the test content
-	<xp:button id="clickMe" value="Click Me Too">
-	<xp:eventHandler event="onclick" submit="false">
-		<xp:this.script><![CDATA[XSP.alert("hey")]]></xp:this.script>
-	</xp:eventHandler></xp:button>
-</xp:view>

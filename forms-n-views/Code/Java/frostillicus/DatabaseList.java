@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import lotus.domino.NotesException;
 
+@SuppressWarnings("unused")
 public class DatabaseList extends TabularDataModel implements Serializable, TabularDataSource {
 	private static final long serialVersionUID = -4878641986912884110L;
 
@@ -60,6 +61,7 @@ public class DatabaseList extends TabularDataModel implements Serializable, Tabu
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private class FakeEntryData extends HashMap<String, Comparable> implements ViewRowData {
 		private static final long serialVersionUID = 5946100397649532083L;
 
@@ -77,6 +79,7 @@ public class DatabaseList extends TabularDataModel implements Serializable, Tabu
 			}
 		}
 	}
+	@SuppressWarnings("unchecked")
 	private class MapComparator implements Comparator<Map<String, Comparable>> {
 		private String key;
 		private boolean ascending;

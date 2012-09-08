@@ -5,13 +5,21 @@
     <default-prefix>xc</default-prefix>
   </faces-config-extension>
   <composite-component>
-    <component-type>layout</component-type>
-    <composite-name>layout</composite-name>
-    <composite-file>/layout.xsp</composite-file>
+    <component-type>djTitlePane</component-type>
+    <composite-name>djTitlePane</composite-name>
+    <composite-file>/djTitlePane.xsp</composite-file>
     <composite-extension>
       <designer-extension>
         <in-palette>true</in-palette>
       </designer-extension>
     </composite-extension>
+    <property>
+      <property-name>titleBarText</property-name>
+      <property-class>string</property-class>
+    </property>
+    <property>
+      <property-name>styleClass</property-name>
+      <property-class>string</property-class>
+    </property>
   </composite-component>
 </faces-config>

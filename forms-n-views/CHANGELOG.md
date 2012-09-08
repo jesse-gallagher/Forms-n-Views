@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- 2012/9/8
+	- Cleaned up the "preview" XML representation at the bottom of each editor
 - 2012/9/7
 	- Added formula and item name validation for forms, folders, and views
 	- Added "move up" and "move down" actions for view and folder columns and form fields
