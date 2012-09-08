@@ -1,0 +1,18 @@
+<faces-config>
+	<faces-config-extension>
+		<namespace-uri>http://example.com/xsp/control</namespace-uri>
+		<default-prefix>eg</default-prefix>
+	</faces-config-extension>
+	
+	<component>
+		<description>An example control</description>
+		<display-name>Example Control</display-name>
+		<component-type>frostillicus.examplecontrol</component-type>
+		<component-class>frostillicus.ExampleControl</component-class>
+		<component-extension>
+			<component-family>frostillicus.examplecontrol</component-family>
+			<renderer-type>frostillicus.examplecontrol</renderer-type>
+			<tag-name>exampleControl</tag-name>
+		</component-extension>
+	</component>
+</faces-config>

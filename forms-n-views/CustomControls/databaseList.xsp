@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
+	
+	<xp:this.data>
+		<xp:dominoView var="databasesView" ignoreRequestParams="true" viewName="#{'Databases'}"
+			categoryFilter="${context.user.name}" />
+	</xp:this.data>
+
+	<xp:repeat id="databaseListRepeat" value="#{databasesView}" var="databaseEntry" rows="1000">
+		<div class="database">
+			<div class="header">
+				<xp:link id="deleteDatabaseEntry" styleClass="delete" text="X">
+					<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="databaseListRepeat">
+						<xp:this.script><![CDATA[
+							return XSP.confirm("Delete this entry?")
+						]]></xp:this.script>
+						<xp:this.action><![CDATA[#{javascript:
+							var databaseDoc = databaseEntry.getDocument()
+							databaseDoc.remove(false)
+							databaseDoc.recycle()
+							databasesView.refresh()
+						}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:link>
+			
+				<xp:image url="tango/application-x-executable.svg" rendered="#{javascript:databaseEntry.getColumnValue('Server') != database.getServer()}"/>
+				<xp:image url="/.ibmxspres/domino/#{javascript:databaseEntry.getColumnValue('FilePath').replace('\\', '/') + '/$Icon'}" rendered="#{javascript:databaseEntry.getColumnValue('Server') == database.getServer()}"/>
+				<xp:text styleClass="title"><xp:this.value><![CDATA[#{javascript:
+					try {
+						var foreignDB = session.getDatabase(databaseEntry.getColumnValue("Server"), databaseEntry.getColumnValue("FilePath"))
+						var title = foreignDB.getTitle()
+						foreignDB.recycle()
+						return title
+					} catch(e) {
+						return "(Error opening database)"
+					}
+				}]]></xp:this.value></xp:text>
+				<xp:span styleClass="path">
+					<xc:abbreviatedName value="#{databaseEntry.Server}"/>!!<xp:text value="#{databaseEntry.FilePath}"/>
+				</xp:span>
+			</div>
+			<div class="body">
+				<xe:navigator>
+					<xe:this.treeNodes>
+						<xe:basicLeafNode label="Forms" image="tango/text-x-generic-16x16.png">
+							<xe:this.onClick><![CDATA[
+								dijit.byId("#{id:contentPane}").createTab({
+									content: "forms",
+									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'forms')}"
+								})
+							]]></xe:this.onClick>
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Views" image="tango/x-office-spreadsheet-16x16.png">
+							<xe:this.onClick><![CDATA[
+								dijit.byId("#{id:contentPane}").createTab({
+									content: "views",
+									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'views')}"
+								})
+							]]></xe:this.onClick>
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Folders" image="tango/folder-16x16.png">
+							<xe:this.onClick><![CDATA[
+								dijit.byId("#{id:contentPane}").createTab({
+									content: "folders",
+									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'folders')}"
+								})
+							]]></xe:this.onClick>
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Style Sheets" image="tango/font-x-generic-16x16.png">
+							<xe:this.onClick><![CDATA[
+								dijit.byId("#{id:contentPane}").createTab({
+									content: "stylesheets",
+									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'stylesheets')}"
+								})
+							]]></xe:this.onClick>
+						</xe:basicLeafNode>
+					</xe:this.treeNodes>
+				</xe:navigator>
+			</div>
+		</div>
+	</xp:repeat>
+</xp:view>

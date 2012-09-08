@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
+<note default='true' class='view' xmlns='http://www.lotus.com/dxl' version='8.5'
+ maintenanceversion='3.0' replicaid='85257A54003A66B6'>
+<noteinfo noteid='122' unid='B8449E5E7BF7C54285257A53005C5B15' sequence='1'>
+<created><datetime dst='true'>20120807T124846,29-04</datetime></created>
+<modified><datetime dst='true'>20120808T063753,91-04</datetime></modified>
+<revised><datetime dst='true'>20120807T124846,30-04</datetime></revised>
+<lastaccessed><datetime dst='true'>20120808T070208,40-04</datetime></lastaccessed>
+<addedtofile><datetime dst='true'>20120808T063753,90-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
+<item name='$TITLE'><text/></item>
+<item name='$Formula' summary='true'><formula compiled='true'>
+HAAFAA4ACgABAAQAJCQkJAQABAAAAAgAZgADAA==
+</formula></item>
+<item name='$FormulaClass'><text>1</text></item></note>
+

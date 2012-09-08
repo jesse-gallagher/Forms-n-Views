@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="272" sequence="27" unid="B9641AB7FC81F2CC85257A590042843D">
+<created><datetime dst="true">20120813T080632,29-04</datetime></created>
+<modified><datetime dst="true">20120907T140156,11-04</datetime></modified>
+<revised><datetime dst="true">20120907T140156,09-04</datetime></revised>
+<lastaccessed><datetime dst="true">20120907T140156,09-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20120813T080632,29-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<item name="$Flags"><text>34567Cg~[</text></item>
+<item name="$TITLE"><text>com/raidomatic/xml/XMLNodeList.java</text></item>
+
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>com/raidomatic/xml/XMLNodeList.java</text></item>
+
+</note>

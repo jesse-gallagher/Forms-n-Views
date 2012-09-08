@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.data>
+		<xp:dominoDocument var="databaseDoc" ignoreRequestParams="true" action="openDocument" documentId="${compositeData.databaseDocumentId}">
+			<xp:this.postOpenDocument><![CDATA[#{javascript:
+				getComponent("stylesheetsPane").setTitle(databaseDoc.getItemValueString("FilePath") + " - Style Sheets")
+				
+				if(!viewScope.containsKey("stylesheets-" + compositeData.databaseDocumentId)) {
+					try {
+					var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
+					var notes = foreignDB.createNoteCollection(false)
+					notes.setSelectStylesheetResources(true)
+					notes.buildCollection()
+					var result = []
+					var noteid = notes.getFirstNoteID()
+					while(noteid != "") {
+						var ss = foreignDB.getDocumentByID(noteid)
+						result.push({
+							name: ss.getItemValueString("$TITLE"),
+							modified: function() {
+								var dt = ss.getLastModified()
+								var d = dt.toJavaDate()
+								dt.recycle()
+								return d
+							}(),
+							unid: ss.getUniversalID()
+						})
+						
+						ss.recycle()
+						noteid = notes.getNextNoteID(noteid)
+					}
+					foreignDB.recycle()
+					viewScope["stylesheets-" + compositeData.databaseDocumentId] = result.sort(function(a, b) { return a.name.compareTo(b.name) })
+					} catch(e) { e.printStackTrace ? e.printStackTrace() : print(e) }
+				}
+			}]]></xp:this.postOpenDocument>
+		</xp:dominoDocument>
+	</xp:this.data>
+	
+	<xp:dataTable value="#{javascript:viewScope['stylesheets-'+compositeData.databaseDocumentId]}" var="designNode" rows="100000">
+		<xp:column>
+			<xp:this.facets><xp:text xp:key="header" value="Name"/></xp:this.facets>
+			<xp:link id="openView" text="#{javascript:designNode.name == '' ? '(Untitled)' : designNode.name}">
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script><![CDATA[
+						var key = "#{javascript:compositeData.databaseDocumentId}#{javascript:compositeData.designDocumentId}"
+						var pane = dijit.byId("#{id:contentPane}")
+						var children = pane.getChildren()
+						for(var i = 0; i < children.length; i++) {
+							if(children[i].tabUniqueKey == key) {
+								pane.selectChild(children[i])
+								return
+							}
+						}
+					
+						pane.createTab({
+							content: "stylesheet",
+							databaseDocumentId: "#{javascript:compositeData.databaseDocumentId}",
+							designDocumentId: "#{javascript:designNode.unid}"
+						})
+					]]></xp:this.script>
+				</xp:eventHandler>
+			</xp:link>
+		</xp:column>
+		<xp:column>
+			<xp:this.facets><xp:text xp:key="header" value="Aliases"/></xp:this.facets>
+			<xp:text value="#{designNode.aliases}"/>
+		</xp:column>
+		<xp:column>
+			<xp:this.facets><xp:text xp:key="header" value="Last Modified"/></xp:this.facets>
+			<xc:dateTime value="#{designNode.modified}"/>
+		</xp:column>
+	</xp:dataTable>
+</xp:view>

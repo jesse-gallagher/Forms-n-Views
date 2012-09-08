@@ -1,0 +1,113 @@
+.databasesPane {
+	width: 200px;
+	padding: 0 !important;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+}
+.lotusActionBar {
+	background-color: #eee;
+	border-bottom: 1px solid #ccc;
+	padding: 3px;
+}
+.databasesPane .lotusActionBar {
+	margin-bottom: 0 !important;
+}
+.databasesPane .lotusMenu {
+	margin-bottom: 0.5em !important;
+}
+.databasesPane .lotusMenu a {
+	font-weight: normal !important;
+}
+
+.database {
+	border-bottom: 1px solid rgb(157, 157, 157);
+}
+.database .header {
+	height: 32px;
+	clear: left;
+	padding: 5px;
+	
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(242, 241, 245)), to(rgb(226, 225, 229)));
+	background: -moz-linear-gradient(0% 100% 90deg, rgb(226, 225, 229), rgb(242, 241, 245));
+}
+.database .delete {
+	float: right;
+	color: darkblue;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 90%;
+	z-index: 1000;
+	position: relative;
+}
+.database img {
+	display: block;
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+.database .title {
+	display: block;
+	margin-left: 36px;
+	padding-top: 2px;
+	font-weight: bold;
+	white-space: nowrap;
+	z-index: 1;
+	position: relative;
+}
+.database .path {
+	display: block;
+	margin-left: 36px;
+	color: grey;
+	white-space: nowrap;
+}
+
+.database .body img {
+	width: 16px;
+	height: 16px;
+}
+
+.contentArea .dijitTabPane {
+	overflow: auto;
+}
+
+img.addRemove {
+	width: 16px;
+	height: 16px;
+}
+
+.code {
+	font-family: "Consolas", monospace !important;
+	font-size: 12px !important;
+}
+textarea.code {
+	width: 30em;
+	height: 3em;
+}
+table textarea.code {
+	width: 100%;
+}
+
+/* Editor columns */
+.advanced img {
+	width: 16px;
+	height: 16px;
+}
+
+.filler { width: 100% }
+
+/* Action buttons */
+/*.saveButton { display: none }
+.dirty .saveButton { display: inline-block }*/
+
+/* Icons */
+.icon16 {
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.iconDB { background-image: url("tango/application-x-executable-16x16.png"); }
+.iconViews, .iconView { background-image: url("tango/x-office-spreadsheet-16x16.png"); }
+.iconForms, .iconForm { background-image: url("tango/text-x-generic-16x16.png"); }
+.iconHome { background-image: url("tango/go-home-16x16.png"); }
+.iconStylesheets, .iconStylesheet { background-image: url("tango/font-x-generic-16x16.png"); }

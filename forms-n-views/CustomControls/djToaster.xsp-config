@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>djToaster</component-type>
+    <composite-name>djToaster</composite-name>
+    <composite-file>/djToaster.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>defaultType</property-name>
+      <property-class>string</property-class>
+      <description>If message type isn't specified (see "messageTopic" parameter), then display message as this type. Possible values in messageTypes enumeration ("message", "warning", "error", "fatal")</description>
+      <display-name>Default Type</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>message&#xd;
+warning&#xd;
+error&#xd;
+fatal</editor-parameter>
+          <default-value>message</default-value>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>duration</property-name>
+      <property-class>long</property-class>
+      <display-name>Duration</display-name>
+      <description>Number of milliseconds to show message</description>
+      <property-extension>
+        <designer-extension>
+          <default-value>5000</default-value>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>messageTopic</property-name>
+      <property-class>string</property-class>
+      <description>Name of topic; anything published to this topic will be displayed as a message. Message format is either String or an object like {message: "hello word", type: "error", duration: 500}</description>
+      <property-extension>
+        <required>true</required>
+      </property-extension>
+      <display-name>Message Topic</display-name>
+    </property>
+    <property>
+      <property-name>positionDirection</property-name>
+      <property-class>string</property-class>
+      <display-name>Position/Direction</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>br-up&#xd;
+br-left&#xd;
+bl-up&#xd;
+bl-right&#xd;
+tr-down&#xd;
+tr-left&#xd;
+tl-down&#xd;
+tl-right</editor-parameter>
+          <default-value>br-up</default-value>
+        </designer-extension>
+      </property-extension>
+      <description>Position from which message slides into screen, one of ["br-up", "br-left", "bl-up", "bl-right", "tr-down", "tr-left", "tl-down", "tl-right"]</description>
+    </property>
+    <property>
+      <property-name>separator</property-name>
+      <property-class>string</property-class>
+      <display-name>Separator</display-name>
+      <description>String used to separate messages if consecutive calls are made to setContent before previous messages go away</description>
+    </property>
+  </composite-component>
+</faces-config>

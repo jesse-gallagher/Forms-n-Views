@@ -1,0 +1,12 @@
+div.dijitToasterContainer {
+	margin-top: 2em !important;
+	margin-right: 2em !important;
+	font-family: sans-serif;
+	font-weight: bold;
+	width: 20em;
+}
+div.dijitToasterContent {
+	background-color: rgba(0, 0, 0, 0.8);
+	font-size: 14px;
+	border-radius: 0.5em;
+}

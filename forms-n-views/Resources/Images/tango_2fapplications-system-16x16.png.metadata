@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="25a" sequence="3" unid="3AB0A2FF4938343F85257A5500424377">
+<created><datetime dst="true">20120809T080346,47-04</datetime></created>
+<modified><datetime dst="true">20120821T093652,33-04</datetime></modified>
+<revised><datetime dst="true">20120821T093652,31-04</datetime></revised>
+<lastaccessed><datetime dst="true">20120821T093652,31-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20120809T080346,47-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$FileModDT" sign="true"><datetime>20060105T093246,00-05</datetime></item>
+<item name="$ImageNames" sign="true"><text>applications-system.png</text></item>
+<item name="$TITLE" sign="true"><textlist><text>tango/applications-system-16x16.png</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>

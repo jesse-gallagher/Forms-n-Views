@@ -1,0 +1,86 @@
+<theme extends="oneuiv2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/plugin/com.ibm.designer.domino.stylekits/schema/stylekit.xsd" >
+	<resources>
+		<styleSheet href="/style.css"/>
+		<styleSheet href="/addDatabase.css"/>
+		<styleSheet href="/toaster.css"/>
+		
+		
+<!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/claro/claro.css"/>-->
+<!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/tundra/tundra.css"/>-->
+		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/soria/soria.css"/>
+<!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/nihilo/nihilo.css"/>-->
+		
+		<dojoModule name="dojox.widget.Toaster"/>
+		<styleSheet href="/.ibmxspres/dojoroot/dojox/widget/Toaster/Toaster.css"/>
+		
+		<script type="text/javascript" clientSide="true" src="/ui.js"/>
+	</resources>
+	
+	<control>
+		<name>ViewRoot</name>
+		<property>
+			<name>pageIcon</name>
+			<value>/$Icon</value>
+		</property>
+		<property>
+			<name>pageTitle</name>
+			<value>#{database.title}</value>
+		</property>
+		<property>
+			<name>styleClass</name>
+			<value>xsp lotusui soria</value>
+		</property>
+	</control>
+	
+	<!-- Set up some common partial refresh/exec behavior for editor panel refreshes -->
+	<control>
+		<name>Editor.Refresh</name>
+		<property>
+			<name>submit</name>
+			<value>true</value>
+		</property>
+		<property>
+			<name>refreshMode</name>
+			<value>partial</value>
+		</property>
+		<property>
+			<name>refreshId</name>
+			<value>editorPanel</value>
+		</property>
+		<property>
+			<name>execMode</name>
+			<value>partial</value>
+		</property>
+		<property>
+			<name>execId</name>
+			<value>editorPanel</value>
+		</property>
+		<property type="boolean">
+			<name>disableValidators</name>
+			<value>true</value>
+		</property>
+	</control>
+	<control>
+		<name>Editor.Save</name>
+		<property>
+			<name>submit</name>
+			<value>true</value>
+		</property>
+		<property>
+			<name>refreshMode</name>
+			<value>partial</value>
+		</property>
+		<property>
+			<name>refreshId</name>
+			<value>editorPanel</value>
+		</property>
+		<property>
+			<name>execMode</name>
+			<value>partial</value>
+		</property>
+		<property>
+			<name>execId</name>
+			<value>editorPanel</value>
+		</property>
+	</control>
+</theme>

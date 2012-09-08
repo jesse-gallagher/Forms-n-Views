@@ -1,0 +1,29 @@
+.addDatabaseDialog .lotusDialogContent {
+	height: 400px;
+	width: 400px;
+	padding: 0 !important;
+	overflow: hidden !important;
+}
+
+.newDatabaseServerPane {
+	padding: 0.5em !important;
+}
+.newDatabaseServer {
+	width: 100%;
+}
+
+.databaseCatalogListPane {
+	overflow-y: auto !important;
+	height: 270px !important;
+}
+.databaseCatalogList {
+	width: 100%;
+	border-collapse: collapse;
+}
+.databaseCatalogList td, .databaseCatalogList th {
+	padding: 3px 5px;
+	border: 1px solid #ccc !important;
+}
+.databaseCatalogList th {
+	background-color: #eee; 
+}

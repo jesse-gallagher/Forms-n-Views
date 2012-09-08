@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom" xmlns:eg="http://example.com/xsp/control">
+
+	<xc:djToaster messageTopic="/toaster" positionDirection="tr-left" />
+
+	<xp:this.dataContexts>
+		<xp:dataContext var="tabIndexManager" value="${javascript: new frostillicus.TabIndexManager()}"/>
+	</xp:this.dataContexts>
+
+	<xe:djBorderContainer id="djBorderContainer1" style="width: 100%; height: 100%" gutters="true">
+		<xe:djBorderPane id="djBorderPane1" region="leading" styleClass="databasesPane" splitter="true">
+			<xc:actionBar>
+				<xc:addDatabase refreshId="databaseList" />
+			</xc:actionBar>
+
+			<xc:databaseList id="databaseList" />
+		</xe:djBorderPane>
+		<xe:djTabContainer id="contentPane" defaultTabContent="unknown" style="width: 100%; height: 100%" styleClass="contentArea">
+			<xp:this.dojoAttributes>
+				<xp:dojoAttribute name="region" value="center" />
+			</xp:this.dojoAttributes>
+			<xp:this.facets>
+				<xe:djTabPane xp:key="unknown" id="djTabPane2" title="Test" closable="true">Unknown Element</xe:djTabPane>
+
+				<!-- Views -->
+				<xe:djTabPane xp:key="views" id="viewsPane" title="Views" closable="true">
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconDB" />
+					</xp:this.dojoAttributes>
+					<xc:viewList databaseDocumentId="${param.databaseDocumentId}" />
+				</xe:djTabPane>
+				<xe:djTabPane xp:key="view" id="viewPane" title="View" closable="true">
+					<xp:this.onClose><![CDATA[
+						var pane = dijit.byId("#{id:viewPane}")
+						if(/\bdirty\b/.test(pane.get("class"))) {
+							return XSP.confirm("There are unsaved changes. Close this tab?")
+						}
+						return true
+					]]></xp:this.onClose>
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconView" />
+					</xp:this.dojoAttributes>
+					<xc:viewEditor databaseDocumentId="${param.databaseDocumentId}" designDocumentId="${param.designDocumentId}" />
+				</xe:djTabPane>
+				
+				<!-- Folders -->
+				<xe:djTabPane xp:key="folders" id="foldersPane" title="Folders" closable="true">
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconDB" />
+					</xp:this.dojoAttributes>
+					<xc:folderList databaseDocumentId="${param.databaseDocumentId}" />
+				</xe:djTabPane>
+				<xe:djTabPane xp:key="folder" id="folderPane" title="View" closable="true">
+					<xp:this.onClose><![CDATA[
+						var pane = dijit.byId("#{id:folderPane}")
+						if(/\bdirty\b/.test(pane.get("class"))) {
+							return XSP.confirm("There are unsaved changes. Close this tab?")
+						}
+						return true
+					]]></xp:this.onClose>
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconView" />
+					</xp:this.dojoAttributes>
+					<xc:folderEditor databaseDocumentId="${param.databaseDocumentId}" designDocumentId="${param.designDocumentId}" />
+				</xe:djTabPane>
+
+				<!-- Forms -->
+				<xe:djTabPane xp:key="forms" id="formsPane" title="Forms" closable="true">
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconDB" />
+					</xp:this.dojoAttributes>
+					<xc:formList databaseDocumentId="${param.databaseDocumentId}" />
+				</xe:djTabPane>
+				<xe:djTabPane xp:key="form" id="formPane" title="Form" closable="true">
+					<xp:this.onClose><![CDATA[
+						var pane = dijit.byId("#{id:formPane}")
+						if(/\bdirty\b/.test(pane.get("class"))) {
+							return XSP.confirm("There are unsaved changes. Close this tab?")
+						}
+						return true
+					]]></xp:this.onClose>
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconForm" />
+					</xp:this.dojoAttributes>
+					<xc:formEditor databaseDocumentId="${param.databaseDocumentId}" designDocumentId="${param.designDocumentId}" />
+				</xe:djTabPane>
+
+				<!-- Stylesheets -->
+				<xe:djTabPane xp:key="stylesheets" id="stylesheetsPane" title="Style Sheets" closable="true">
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconStylesheets" />
+					</xp:this.dojoAttributes>
+					<xc:stylesheetList databaseDocumentId="${param.databaseDocumentId}" />
+<!--					<xp:eventHandler event="onLoad" submit="true" refreshMode="complete">-->
+<!--						<xe:this.action><![CDATA[#{javascript:-->
+<!--							getComponent("stylesheets").setTabUniqueKey(tabIndexManager.getIndex(param.databaseDocumentId, "stylesheets"))-->
+<!--						}]]></xe:this.action>-->
+<!--					</xp:eventHandler>-->
+				</xe:djTabPane>
+				<xe:djTabPane xp:key="stylesheet" id="stylesheetPane" title="Style Sheet" closable="true"
+					tabUniqueKey="${param.databaseDocumentId}${param.designDocumentId}">
+					<xp:this.onClose><![CDATA[
+						var pane = dijit.byId("#{id:stylesheetPane}")
+						if(/\bdirty\b/.test(pane.get("class"))) {
+							return XSP.confirm("There are unsaved changes. Close this tab?")
+						}
+						return true
+					]]></xp:this.onClose>
+					<xp:this.dojoAttributes>
+						<xp:dojoAttribute name="iconClass" value="icon16 iconStylesheet" />
+					</xp:this.dojoAttributes>
+					<xc:stylesheetEditor databaseDocumentId="${param.databaseDocumentId}" designDocumentId="${param.designDocumentId}" />
+
+				</xe:djTabPane>
+			</xp:this.facets>
+
+			<xe:djTabPane title="Welcome" id="welcome">
+				<xp:this.dojoAttributes>
+					<xp:dojoAttribute name="iconClass" value="icon16 iconHome" />
+				</xp:this.dojoAttributes>
+
+				<div class="lotusAbout">
+					<div class="lotusAboutBox">
+						<xp:image url="/tango/go-home.svg" />
+						<div class="lotusAboutText">
+							<xp:text tagName="h1" styleClass="" value="Forms 'n' Views" />
+						</div>
+					</div>
+				</div>
+			</xe:djTabPane>
+		</xe:djTabContainer>
+	</xe:djBorderContainer>
+</xp:view>

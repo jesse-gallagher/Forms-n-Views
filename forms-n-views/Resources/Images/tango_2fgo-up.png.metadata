@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2e2" sequence="2" unid="0FD0C255962D380F85257A72006324B3">
+<created><datetime dst="true">20120907T140254,59-04</datetime></created>
+<modified><datetime dst="true">20120907T140302,77-04</datetime></modified>
+<revised><datetime dst="true">20120907T140302,76-04</datetime></revised>
+<lastaccessed><datetime dst="true">20120907T140302,76-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20120907T140254,66-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<item name="$Flags"><text>D34CiQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$FileModDT" sign="true"><datetime dst="true">20060322T160338,00-04</datetime></item>
+<item name="$ImageNames" sign="true"><text>go-up.png</text></item>
+<item name="$TITLE" sign="true"><textlist><text>tango/go-up.png</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:this.resources>
+		<xp:dojoModule name="dojox.widget.Toaster"/>
+		<xp:styleSheet href="/.ibmxspres/dojoroot/dojox/widget/Toaster/Toaster.css"/>
+	</xp:this.resources>
+	
+	<xp:scriptBlock><xp:this.value><![CDATA[#{javascript:
+		var params = {
+			messageTopic: compositeData.messageTopic,
+			positionDirection: compositeData.positionDirection,
+			duration: compositeData.duration
+		}
+		params.positionDirection = compositeData.containsKey("positionDirection") ? compositeData.positionDirection : "br-up"
+		params.duration = compositeData.containsKey("duration") ? compositeData.duration : 5000
+		if(compositeData.containsKey("defaultType")) params.defaultType = compositeData.defaultType
+		if(compositeData.containsKey("separator")) params.separator = compositeData.separator
+		
+		return "XSP.addOnLoad(function() { new dojox.widget.Toaster(" + toJson(params) + ") })"
+	}]]></xp:this.value></xp:scriptBlock>
+
+</xp:view>

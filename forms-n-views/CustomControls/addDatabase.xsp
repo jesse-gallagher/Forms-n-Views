@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.dataContexts>
+		<xp:dataContext var="databaseCatalogList" value="${javascript:new frostillicus.DatabaseCatalogList()}"/>
+	</xp:this.dataContexts>
+
+	<xp:button id="addDatabase" value="Add">
+		<xp:eventHandler event="onclick" submit="false">
+			<xp:this.script><![CDATA[XSP.openDialog("#{id:addDatabaseDialog}")]]></xp:this.script>
+		</xp:eventHandler>
+	</xp:button>
+	<xe:dialog id="addDatabaseDialog" title="Add Database" styleClass="addDatabaseDialog">
+		<xp:panel>
+			<xp:this.data>
+				<xp:dominoDocument var="newDatabaseDoc" formName="${'Database'}" computeWithForm="both"
+					ignoreRequestParams="true" action="newDocument">
+					<xp:this.postNewDocument><![CDATA[#{javascript:
+						print("okie")
+						databaseCatalogList.setServer(newDatabaseDoc.getItemValueString("Server"))
+					}]]></xp:this.postNewDocument>
+				</xp:dominoDocument>
+			</xp:this.data>
+			
+			<xe:dialogContent>
+				<xe:djBorderContainer style="width: 100%; height: 100%" gutters="false">
+					<xe:djBorderPane region="top" styleClass="newDatabaseServerPane">
+						<xe:djComboBox id="newDatabaseServer" value="#{newDatabaseDoc.Server}" styleClass="newDatabaseServer">
+							<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="databaseCatalogList"
+								execMode="partial" execId="addDatabaseDialog" disableValidators="true">
+								<xp:this.action><![CDATA[#{javascript:
+									databaseCatalogList.setServer(newDatabaseDoc.getItemValueString("Server"))
+								}]]></xp:this.action>
+							</xp:eventHandler>
+							
+							<xp:selectItem itemLabel="${database.server}"/>
+							<xp:selectItem itemLabel="CN=Herc/O=MTC"/>
+						</xe:djComboBox>
+					</xe:djBorderPane>
+					<xe:djBorderPane region="center" styleClass="databaseCatalogListPane">
+						<xp:dataTable id="databaseCatalogList" value="#{databaseCatalogList.databaseList}" var="databaseCatalogEntry" rows="10000"
+							styleClass="databaseCatalogList">
+							<xp:column>
+								<xp:this.facets><xp:text xp:key="header" value="File Path"/></xp:this.facets>
+								<xp:link text="#{databaseCatalogEntry.filePath}" id="link1">
+									<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="#{compositeData.refreshId}">
+										<xp:this.action>
+											<xp:actionGroup>
+												<xp:setValue binding="#{newDatabaseDoc.FilePath}" value="#{databaseCatalogEntry.filePath}"></xp:setValue>
+												<xp:saveDocument var="newDatabaseDoc"></xp:saveDocument>
+											</xp:actionGroup>
+										</xp:this.action>
+										<xp:this.script><![CDATA[XSP.closeDialog("#{id:addDatabaseDialog}")]]></xp:this.script>
+									</xp:eventHandler>
+								</xp:link>
+							</xp:column>
+							<xp:column>
+								<xp:this.facets><xp:text xp:key="header" value="Title"/></xp:this.facets>
+								<xp:text value="#{databaseCatalogEntry.title}"/>
+							</xp:column>
+						</xp:dataTable>
+					</xe:djBorderPane>
+				</xe:djBorderContainer>
+<!--				<xe:formTable>-->
+<!--					<xe:formRow for="newDatabaseServer" label="Server">-->
+<!--						-->
+<!--					</xe:formRow>-->
+<!--					<xe:formRow labelPosition="above">-->
+<!--						-->
+<!--					</xe:formRow>-->
+<!--				</xe:formTable>-->
+			</xe:dialogContent>
+<!--			<xe:dialogButtonBar>-->
+<!--				<xp:button id="addDatabaseSubmit" value="Add">-->
+<!--					<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="#{compositeData.refreshId}">-->
+<!--						<xp:this.action><xp:saveDocument var="newDatabaseDoc"/></xp:this.action>-->
+<!--						<xp:this.script><![CDATA[XSP.closeDialog("#{id:addDatabaseDialog}")]]></xp:this.script>-->
+<!--					</xp:eventHandler>-->
+<!--				</xp:button>-->
+<!--			</xe:dialogButtonBar>-->
+		</xp:panel>
+	</xe:dialog>
+</xp:view>

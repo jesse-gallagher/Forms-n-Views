@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="24e" sequence="4" unid="9C26EC5D4F15A71685257A5500411508">
+<created><datetime dst="true">20120809T075052,24-04</datetime></created>
+<modified><datetime dst="true">20120821T093704,26-04</datetime></modified>
+<revised><datetime dst="true">20120821T093704,24-04</datetime></revised>
+<lastaccessed><datetime dst="true">20120821T093704,24-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20120809T075052,22-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<item name="$Flags"><text>D34CiQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$FileModDT" sign="true"><datetime dst="true">20051008T143444,00-04</datetime></item>
+<item name="$ImageNames" sign="true"><text>x-office-spreadsheet.png</text></item>
+<item name="$TITLE" sign="true"><textlist><text>tango/x-office-spreadsheet-16x16.png</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>
