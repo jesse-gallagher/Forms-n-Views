@@ -5,9 +5,9 @@
 		<styleSheet href="/toaster.css"/>
 		
 		
-<!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/claro/claro.css"/>-->
+		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/claro/claro.css"/>
 <!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/tundra/tundra.css"/>-->
-		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/soria/soria.css"/>
+<!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/soria/soria.css"/>-->
 <!--		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/nihilo/nihilo.css"/>-->
 		
 		<dojoModule name="dijit.TitlePane"/>
@@ -30,7 +30,7 @@
 		</property>
 		<property>
 			<name>styleClass</name>
-			<value>xsp lotusui soria</value>
+			<value>xsp lotusui claro</value>
 		</property>
 	</control>
 	

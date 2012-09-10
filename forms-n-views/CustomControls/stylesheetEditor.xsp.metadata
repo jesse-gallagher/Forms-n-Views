@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="222" sequence="202" unid="5C2EE85BA9A179C185257A55003C49F5">
+<noteinfo noteid="222" sequence="206" unid="5C2EE85BA9A179C185257A55003C49F5">
 <created><datetime dst="true">20120809T065830,93-04</datetime></created>
-<modified><datetime dst="true">20120907T195248,72-04</datetime></modified>
-<revised><datetime dst="true">20120907T195248,70-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120907T195248,70-04</datetime></lastaccessed>
+<modified><datetime dst="true">20120908T165354,90-04</datetime></modified>
+<revised><datetime dst="true">20120908T165354,88-04</datetime></revised>
+<lastaccessed><datetime dst="true">20120908T165354,88-04</datetime></lastaccessed>
 <addedtofile><datetime dst="true">20120809T065830,96-04</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
 <wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
@@ -12,11 +12,11 @@
 
 
 
-
-
-<item name="$FileNames" sign="true"><text>stylesheetEditor.xsp</text></item>
-<item name="$DesignerVersion"><text>8.5.1</text></item>
+<item name="$DesignerVersion"><text>8.5.2</text></item>
 
 
 
-</note>
+
+
+
+<item name="$FileNames" sign="true"><text>stylesheetEditor.xsp</text></item></note>

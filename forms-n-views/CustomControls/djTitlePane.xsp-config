@@ -21,5 +21,9 @@
       <property-name>styleClass</property-name>
       <property-class>string</property-class>
     </property>
+    <property>
+      <property-name>open</property-name>
+      <property-class>boolean</property-class>
+    </property>
   </composite-component>
 </faces-config>

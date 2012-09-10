@@ -1,6 +1,9 @@
 Changelog
 =========
 
+- 2012/9/10
+	- Switched from the "soria" Dojo theme to "claro"
+	- Added default/computed formula editing for form fields
 - 2012/9/8
 	- Cleaned up the "preview" XML representation at the bottom of each editor
 - 2012/9/7

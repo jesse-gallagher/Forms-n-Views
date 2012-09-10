@@ -3,6 +3,7 @@
 	padding: 0 !important;
 	overflow-y: auto !important;
 	overflow-x: hidden !important;
+	margin-top: 4px;
 }
 .lotusActionBar {
 	background-color: #eee;

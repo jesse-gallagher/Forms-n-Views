@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
-<!--	<xp:this.data>-->
-<!--		<xp:dominoDocument var="databaseDoc" ignoreRequestParams="true" action="openDocument" documentId="${compositeData.databaseDocumentId}"/>-->
-<!--		<xp:dominoDocument var="designDoc" ignoreRequestParams="true" action="openDocument"-->
-<!--			databaseName="#{databaseDoc.Server}!!#{databaseDoc.FilePath}" documentId="${compositeData.designDocumentId}">-->
-<!--			<xp:this.postOpenDocument><![CDATA[#{javascript:-->
-<!--				getComponent("stylesheetPane").setTitle(designDoc.getItemValueString("$TITLE").split("|")[0])-->
-<!--			}]]></xp:this.postOpenDocument>-->
-<!--		</xp:dominoDocument>-->
-<!--	</xp:this.data>-->
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: new frostillicus.dxl.Stylesheet(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
@@ -49,7 +40,7 @@
 			</xe:formRow>
 		</xe:formTable>
 
-		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview">
+		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview" open="false">
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>

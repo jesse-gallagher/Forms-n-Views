@@ -93,6 +93,10 @@
 							<xp:selectItem itemLabel="Computed when composed" itemValue="computedwhencomposed" itemDisabled="#{(fieldNode.fieldType != 'richtext' || fieldNode.fieldType != 'richtextlite')}"/>
 						</xp:comboBox>
 					</xp:column>
+					<xp:column style="width: 100%">
+						<xp:this.facets><xp:text xp:key="header" value="Default/Computed Formula"/></xp:this.facets>
+						<xe:djTextarea id="fieldFormula" value="#{fieldNode.defaultValueFormula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:formPane}')" validator="#{editorController.validateFormula}"/>
+					</xp:column>
 					<xp:column styleClass="advanced">
 						<xp:link id="fieldAdvanced">
 							<xp:image url="/tango/applications-system-16x16.png"/>
@@ -143,7 +147,7 @@
 			</xe:formRow>
 		</xe:formTable>
 		
-		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview">
+		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview" open="false">
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>

@@ -130,7 +130,7 @@
 			</xe:formRow>
 		</xe:formTable>
 		
-		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview">
+		<xc:djTitlePane titleBarText="Design Element DXL" styleClass="dxlPreview" id="dxlPreview" open="false">
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>

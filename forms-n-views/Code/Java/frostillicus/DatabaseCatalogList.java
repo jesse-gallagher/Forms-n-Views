@@ -20,8 +20,6 @@ public class DatabaseCatalogList implements Serializable {
 	public void setServer(String server) throws NotesException {
 		this.server = server;
 
-		System.out.println("Server set to " + server);
-
 		this.databaseList.clear();
 
 		Session session = ExtLibUtil.getCurrentSession();

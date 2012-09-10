@@ -25,6 +25,7 @@ public class EditorController implements Serializable {
 		} catch(Exception e) {
 			StringWriter w = new StringWriter();
 			e.printStackTrace(new PrintWriter(w));
+			e.printStackTrace();
 			FNVUtil.alert("Exception:\n\n" + w.toString());
 
 			return "xsp-failure";

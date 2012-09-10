@@ -15,7 +15,6 @@
 				<xp:dominoDocument var="newDatabaseDoc" formName="${'Database'}" computeWithForm="both"
 					ignoreRequestParams="true" action="newDocument">
 					<xp:this.postNewDocument><![CDATA[#{javascript:
-						print("okie")
 						databaseCatalogList.setServer(newDatabaseDoc.getItemValueString("Server"))
 					}]]></xp:this.postNewDocument>
 				</xp:dominoDocument>
@@ -33,7 +32,6 @@
 							</xp:eventHandler>
 							
 							<xp:selectItem itemLabel="${database.server}"/>
-							<xp:selectItem itemLabel="CN=Herc/O=MTC"/>
 						</xe:djComboBox>
 					</xe:djBorderPane>
 					<xe:djBorderPane region="center" styleClass="databaseCatalogListPane">

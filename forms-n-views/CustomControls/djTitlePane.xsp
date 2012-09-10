@@ -2,6 +2,9 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 	
 	<xp:div dojoType="dijit.TitlePane" title="#{compositeData.titleBarText}" styleClass="#{compositeData.styleClass}">
+		<xp:this.dojoAttributes>
+			<xp:dojoAttribute name="open" value="#{javascript:compositeData.containsKey('open') ? compositeData.open : 'open'}"/>
+		</xp:this.dojoAttributes>
 		<xp:callback/>
 	</xp:div>
 </xp:view>

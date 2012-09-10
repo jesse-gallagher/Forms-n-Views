@@ -79,6 +79,28 @@ public class Form extends AbstractDXLDesignNote {
 		public String getLookUpEachCharString() { return this.node.getAttribute("lookupeachchar"); }
 		public void setLookUpEachCharString(String lookUpEachChar) { this.node.setAttribute("lookupeachchar", lookUpEachChar); }
 
+		public String getDefaultValueFormula() {
+			XMLNode node = this.getDefaultValueFormulaNode();
+			if(node != null) {
+				return node.getText();
+			}
+			return "";
+		}
+		public void setDefaultValueFormula(String defaultValueFormula) {
+			// DXL is not happy with empty default value nodes, so delete when empty
+			XMLNode node = this.getDefaultValueFormulaNode();
+			if(defaultValueFormula == null || defaultValueFormula.length() == 0) {
+				if(node != null) {
+					this.node.removeChild(node.getParentNode());
+				}
+			} else {
+				if(node == null) {
+					if(defaultValueFormula == null || defaultValueFormula.length() == 0) { return; }
+					node = this.createDefaultValueFormulaNode();
+				}
+				node.setText(defaultValueFormula);
+			}
+		}
 
 		// DXL uses the "keyword" field type for several field types, so it's more convenient to make a new faux
 		//	attribute to handle referring to the field type like a human might
@@ -144,6 +166,27 @@ public class Form extends AbstractDXLDesignNote {
 			if(node == null) {
 				node = this.node.addChildElement("keywords");
 			}
+			return node;
+		}
+		private XMLNode getDefaultValueFormulaNode() {
+			XMLNode node = null;
+			try {
+				node = this.node.selectSingleNode("code[@event='defaultvalue']");
+			} catch(XPathExpressionException xee) { }
+
+			if(node == null) {
+				return null;
+			} else {
+				try {
+					node = node.selectSingleNode("formula");
+				} catch(XPathExpressionException xee) { }
+			}
+			return node;
+		}
+		private XMLNode createDefaultValueFormulaNode() {
+			XMLNode node = this.node.addChildElement("code");
+			node.setAttribute("event", "defaultvalue");
+			node = node.addChildElement("formula");
 			return node;
 		}
 	}

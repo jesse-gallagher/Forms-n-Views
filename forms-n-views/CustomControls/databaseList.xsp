@@ -7,6 +7,7 @@
 	</xp:this.data>
 
 	<xp:repeat id="databaseListRepeat" value="#{databasesView}" var="databaseEntry" rows="1000">
+	
 		<div class="database">
 			<div class="header">
 				<xp:link id="deleteDatabaseEntry" styleClass="delete" text="X">
