@@ -3,6 +3,7 @@
 		<styleSheet href="/style.css"/>
 		<styleSheet href="/addDatabase.css"/>
 		<styleSheet href="/toaster.css"/>
+		<styleSheet href="/codemirror-fnv.css"/>
 		
 		
 		<styleSheet href="/.ibmxspres/dojoroot/dijit/themes/claro/claro.css"/>
@@ -16,6 +17,10 @@
 		<styleSheet href="/.ibmxspres/dojoroot/dojox/widget/Toaster/Toaster.css"/>
 		
 		<script type="text/javascript" clientSide="true" src="/ui.js"/>
+		
+		<script type="text/javascript" clientSide="true" src="/codemirror/lib/codemirror.js"/>
+		<styleSheet href="/codemirror/lib/codemirror.css"/>
+		<script type="text/javascript" clientSide="true" src="/codemirror/mode/css/css.js"/>
 	</resources>
 	
 	<control>

@@ -7,37 +7,116 @@
 				
 				if(!viewScope.containsKey("stylesheets-" + compositeData.databaseDocumentId)) {
 					try {
-					var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
-					var notes = foreignDB.createNoteCollection(false)
-					notes.setSelectStylesheetResources(true)
-					notes.buildCollection()
-					var result = []
-					var noteid = notes.getFirstNoteID()
-					while(noteid != "") {
-						var ss = foreignDB.getDocumentByID(noteid)
-						result.push({
-							name: ss.getItemValueString("$TITLE"),
-							modified: function() {
-								var dt = ss.getLastModified()
-								var d = dt.toJavaDate()
-								dt.recycle()
-								return d
-							}(),
-							unid: ss.getUniversalID()
-						})
-						
-						ss.recycle()
-						noteid = notes.getNextNoteID(noteid)
-					}
-					foreignDB.recycle()
-					viewScope["stylesheets-" + compositeData.databaseDocumentId] = result.sort(function(a, b) { return a.name.compareTo(b.name) })
+						var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
+						var notes = foreignDB.createNoteCollection(false)
+						notes.setSelectStylesheetResources(true)
+						notes.buildCollection()
+						var result = []
+						var noteid = notes.getFirstNoteID()
+						while(noteid != "") {
+							var ss = foreignDB.getDocumentByID(noteid)
+							result.push({
+								name: ss.getItemValueString("$TITLE"),
+								modified: function() {
+									var dt = ss.getLastModified()
+									var d = dt.toJavaDate()
+									dt.recycle()
+									return d
+								}(),
+								unid: ss.getUniversalID()
+							})
+							
+							ss.recycle()
+							noteid = notes.getNextNoteID(noteid)
+						}
+						foreignDB.recycle()
+						viewScope["stylesheets-" + compositeData.databaseDocumentId] = result.sort(function(a, b) { return a.name.compareTo(b.name) })
 					} catch(e) { e.printStackTrace ? e.printStackTrace() : print(e) }
 				}
 			}]]></xp:this.postOpenDocument>
 		</xp:dominoDocument>
 	</xp:this.data>
+	<xp:this.dataContexts>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+	</xp:this.dataContexts>
 	
-	<xp:dataTable value="#{javascript:viewScope['stylesheets-'+compositeData.databaseDocumentId]}" var="designNode" rows="100000">
+	<xc:actionBar>
+		<xp:button id="createStylesheet" value="Create Stylesheet">
+			<xp:eventHandler event="onclick" submit="false"><xp:this.script><![CDATA[
+				//frostillicus.dxl.Stylesheet.create(databaseDocumentId, "hey.css")
+				XSP.openDialog("#{id:createStylesheetDialog}")
+			]]></xp:this.script></xp:eventHandler>
+		</xp:button>
+		<xe:dialog title="Create Stylesheet" id="createStylesheetDialog">
+			<xe:dialogContent>
+				<xe:formTable>
+					<xe:formRow label="Name">
+						<xe:djTextBox id="newStylesheetName" required="true"/>
+					</xe:formRow>
+				</xe:formTable>
+			</xe:dialogContent>
+			<xe:dialogButtonBar>
+				<xp:button id="createStylesheetSubmit" value="Create">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							var deferred = DesignServices.createStylesheet("#{javascript:databaseDocumentId}", dojo.byId("#{id:newStylesheetName}").value)
+							deferred.addCallback(function(unid) {
+								XSP.closeDialog("#{id:createStylesheetDialog}")
+								
+								XSP.partialRefreshGet("#{id:stylesheetListTable}", {
+									onComplete: function() {
+										var pane = dijit.byId("#{id:contentPane}")
+										pane.createTab({
+											content: "stylesheet",
+											databaseDocumentId: "#{javascript:databaseDocumentId}",
+											designDocumentId: unid
+										})
+									}
+								})
+							})
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+				<xp:button id="createStylesheetCancel" value="Cancel">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							XSP.closeDialog("#{id:createStylesheetDialog}")
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+			</xe:dialogButtonBar>
+		</xe:dialog>
+	</xc:actionBar>
+	
+<!--	<xp:dataTable value="#{javascript:viewScope['stylesheets-'+compositeData.databaseDocumentId]}" var="designNode" rows="100000">-->
+	<xp:dataTable var="designNode" rows="100000" id="stylesheetListTable">
+		<xp:this.value><![CDATA[#{javascript:
+			var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
+			var notes = foreignDB.createNoteCollection(false)
+			notes.setSelectStylesheetResources(true)
+			notes.buildCollection()
+			var result = []
+			var noteid = notes.getFirstNoteID()
+			while(noteid != "") {
+				var ss = foreignDB.getDocumentByID(noteid)
+				result.push({
+					name: ss.getItemValueString("$TITLE"),
+					modified: function() {
+						var dt = ss.getLastModified()
+						var d = dt.toJavaDate()
+						dt.recycle()
+						return d
+					}(),
+					unid: ss.getUniversalID()
+				})
+				
+				ss.recycle()
+				noteid = notes.getNextNoteID(noteid)
+			}
+			foreignDB.recycle()
+			//viewScope["stylesheets-" + compositeData.databaseDocumentId] = result.sort(function(a, b) { return a.name.compareTo(b.name) })
+			result.sort(function(a, b) { return a.name.compareTo(b.name) })
+		}]]></xp:this.value>
 		<xp:column>
 			<xp:this.facets><xp:text xp:key="header" value="Name"/></xp:this.facets>
 			<xp:link id="openView" text="#{javascript:designNode.name == '' ? '(Untitled)' : designNode.name}">

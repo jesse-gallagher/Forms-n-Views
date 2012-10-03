@@ -1,11 +1,18 @@
 package frostillicus.dxl;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+
+import javax.faces.context.FacesContext;
 import javax.xml.xpath.XPathExpressionException;
-import com.raidomatic.xml.XMLNode;
+
+import com.ibm.domino.xsp.module.nsf.NotesContext;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+import com.raidomatic.xml.*;
+
+import frostillicus.FNVUtil;
 import sun.misc.BASE64Encoder;
 import sun.misc.BASE64Decoder;
+import lotus.domino.*;
 //import org.apache.commons.codec.binary.Base64;
 
 public class Stylesheet extends AbstractDXLDesignNote {
@@ -25,5 +32,41 @@ public class Stylesheet extends AbstractDXLDesignNote {
 		XMLNode dataNode = this.getRootNode().selectSingleNode("/stylesheetresource/filedata");
 		dataNode.setTextContent(new BASE64Encoder().encodeBuffer(content.getBytes()).trim());
 		//dataNode.setTextContent(Base64.encodeBase64String(content.getBytes()));
+	}
+
+	public static String create(String databaseDocumentId, String name) throws Exception {
+		DxlImporter importer = null;
+		try {
+			// Designer is case-sensitive too
+			if(!name.endsWith(".css")) {
+				name = name + ".css";
+			}
+
+			InputStream is = Stylesheet.class.getResourceAsStream("/dxl/stylesheet.xml");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			StringBuilder xmlBuilder = new StringBuilder();
+			while(reader.ready()) {
+				xmlBuilder.append(reader.readLine());
+				xmlBuilder.append("\n");
+			}
+			is.close();
+			String xml = xmlBuilder.toString().replace("name=\"\"", "name=\"" + FNVUtil.xmlEncode(name) + "\"");
+
+			importer = ExtLibUtil.getCurrentSession().createDxlImporter();
+			importer.setDesignImportOption(DxlImporter.DXLIMPORTOPTION_REPLACE_ELSE_CREATE);
+			importer.setReplicaRequiredForReplaceOrUpdate(false);
+			Document databaseDoc = ExtLibUtil.getCurrentDatabase().getDocumentByUNID(databaseDocumentId);
+			Database foreignDB = ExtLibUtil.getCurrentSessionAsSignerWithFullAccess().getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"));
+			importer.importDxl(xml, foreignDB);
+
+			Document importedDoc = foreignDB.getDocumentByID(importer.getFirstImportedNoteID());
+			return importedDoc.getUniversalID();
+		} catch(Exception e) {
+			e.printStackTrace();
+			if(importer != null) {
+				System.out.println(importer.getLog());
+			}
+		}
+		return null;
 	}
 }

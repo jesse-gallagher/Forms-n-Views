@@ -2,6 +2,20 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom" xmlns:eg="http://example.com/xsp/control">
 
 	<xc:djToaster messageTopic="/toaster" positionDirection="tr-left" />
+	
+	<xe:jsonRpcService id="jsonRpcService1" serviceName="DesignServices">
+		<xe:this.methods>
+			<xe:remoteMethod name="createStylesheet">
+				<xe:this.arguments>
+					<xe:remoteMethodArg name="databaseDocumentId" type="string"></xe:remoteMethodArg>
+					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
+				</xe:this.arguments>
+				<xe:this.script><![CDATA[
+					return frostillicus.dxl.Stylesheet.create(databaseDocumentId, name)
+				]]></xe:this.script>
+			</xe:remoteMethod>
+		</xe:this.methods>
+	</xe:jsonRpcService>
 
 	<xp:this.dataContexts>
 		<xp:dataContext var="tabIndexManager" value="${javascript: new frostillicus.TabIndexManager()}"/>

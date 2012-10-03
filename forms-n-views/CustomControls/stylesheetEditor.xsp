@@ -16,6 +16,7 @@
 				fnv_mark_clean("#{id:stylesheetPane}")
 			}
 		})
+		create_code_mirror("#{id:ssContent}", "css")
 	]]></xp:this.script></xp:eventHandler>
 
 	<xp:panel id="editorPanel">
@@ -24,7 +25,15 @@
 			<xp:this.facets>
 				<xp:panel xp:key="footer">
 					<xp:button id="saveView" value="Save" styleClass="saveButton lotusBtn">
-						<xp:eventHandler event="onclick" themeId="Editor.Refresh" action="#{editorController.save}"/>
+						<xp:eventHandler event="onclick" themeId="Editor.Refresh" action="#{editorController.save}">
+							<xp:this.script><![CDATA[
+								var editorId = "#{id:ssContent}"
+								dojo.byId(editorId).value = document["codemirror-" + editorId].getValue()
+							]]></xp:this.script>
+							<xp:this.onComplete><![CDATA[
+								create_code_mirror("#{id:ssContent}", "css")
+							]]></xp:this.onComplete>
+						</xp:eventHandler>
 					</xp:button>
 				</xp:panel>
 			</xp:this.facets>
@@ -36,7 +45,7 @@
 				<xe:djTextBox id="ssAlias" value="#{designNote.alias}" onKeyPress="fnv_mark_dirty('#{id:stylesheetPane}')"/>
 			</xe:formRow>
 			<xe:formRow label="Content" for="ssContent" labelPosition="above">
-				<xe:djTextarea id="ssContent" value="#{designNote.content}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:stylesheetPane}')"/>
+				<xp:inputTextarea id="ssContent" value="#{designNote.content}" styleClass="code" onkeypress="fnv_mark_dirty('#{id:stylesheetPane}')"/>
 			</xe:formRow>
 		</xe:formTable>
 

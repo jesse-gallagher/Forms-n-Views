@@ -1,8 +1,9 @@
 package frostillicus.dxl;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
+
+import javax.faces.context.FacesContext;
 
 import lotus.domino.*;
 
@@ -16,6 +17,9 @@ public abstract class AbstractDXLDesignNote implements Serializable {
 	private String databaseDocumentId;
 	private String designDocumentId;
 	private XMLDocument dxl;
+
+	protected String getTemplateName() { return "abstract"; }
+
 
 	public AbstractDXLDesignNote(String databaseDocumentId, String designDocumentId) throws Exception {
 		this.databaseDocumentId = databaseDocumentId;
