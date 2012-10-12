@@ -1,6 +1,7 @@
 package frostillicus.dxl;
 
 import java.util.*;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.xml.xpath.XPathExpressionException;
 
@@ -21,15 +22,36 @@ public class Form extends AbstractDXLDesignNote {
 		}
 		return result;
 	}
-	//	public void addField() throws XPathExpressionException {
-	//		// Just add it to the first paragraph for now
-	//		XMLNode fieldNode = this.getDxl().selectSingleNode("/form/body/richtext/par");
-	//		Field field = new Field(fieldNode);
-	//		field.setFieldType("text");
-	//	}
+
+	public void removeField(int index) throws XPathExpressionException {
+		List<XMLNode> fieldNodes = getDxl().selectNodes("//field");
+		fieldNodes.remove(index);
+	}
 	public void swapFields(int a, int b) throws XPathExpressionException {
 		XMLNodeList fieldNodes = (XMLNodeList)getDxl().selectNodes("//field");
 		fieldNodes.swap(a, b);
+	}
+
+	// Add new fields to a hidden paragraph
+	public void addField() throws XPathExpressionException, IOException {
+		XMLNode body = this.getDxl().selectSingleNode("/form/body/richtext");
+
+		// Create an appropriate paragraph definition
+		XMLNode finalPardef = this.getDxl().selectSingleNode("//pardef[last()]");
+		int nextId = Integer.valueOf(finalPardef.getAttribute("id")) + 1;
+		XMLNode pardef = body.addChildElement("pardef");
+		pardef.setAttribute("id", String.valueOf(nextId));
+		pardef.setAttribute("hide", "notes web mobile");
+
+		// Now create the par and the field
+		XMLNode par = body.addChildElement("par");
+		par.setAttribute("def", pardef.getAttribute("id"));
+
+		// Now add the field
+		XMLNode field = par.addChildElement("field");
+		field.setAttribute("kind", "editable");
+		field.setAttribute("name", "");
+		field.setAttribute("type", "text");
 	}
 
 	public class Field implements Serializable {

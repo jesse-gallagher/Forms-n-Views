@@ -23,6 +23,7 @@ public class EditorController implements Serializable {
 			}
 			return result;
 		} catch(Exception e) {
+			System.out.println("Some kind of failure! " + e);
 			StringWriter w = new StringWriter();
 			e.printStackTrace(new PrintWriter(w));
 			e.printStackTrace();

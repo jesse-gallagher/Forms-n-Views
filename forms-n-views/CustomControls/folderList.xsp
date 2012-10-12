@@ -38,8 +38,84 @@
 			}]]></xp:this.postOpenDocument>
 		</xp:dominoDocument>
 	</xp:this.data>
+	<xp:this.dataContexts>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+	</xp:this.dataContexts>
 	
-	<xp:dataTable value="#{viewScope.folderLists[compositeData.databaseDocumentId]}" var="designNode" rows="100000">
+	<xc:actionBar>
+		<xp:button id="createNode" value="Create Folder">
+			<xp:eventHandler event="onclick" submit="false"><xp:this.script><![CDATA[
+				XSP.openDialog("#{id:createNodeDialog}")
+			]]></xp:this.script></xp:eventHandler>
+		</xp:button>
+		<xe:dialog title="Create Folder" id="createNodeDialog">
+			<xe:dialogContent>
+				<xe:formTable>
+					<xe:formRow label="Name">
+						<xe:djTextBox id="newNodeName" required="true"/>
+					</xe:formRow>
+				</xe:formTable>
+			</xe:dialogContent>
+			<xe:dialogButtonBar>
+				<xp:button id="createNodeSubmit" value="Create">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							var deferred = DesignServices.createFolder("#{javascript:databaseDocumentId}", dojo.byId("#{id:newNodeName}").value)
+							deferred.addCallback(function(unid) {
+								XSP.closeDialog("#{id:createNodeDialog}")
+								
+								XSP.partialRefreshGet("#{id:designNodeTable}", {
+									onComplete: function() {
+										var pane = dijit.byId("#{id:contentPane}")
+										pane.createTab({
+											content: "folder",
+											databaseDocumentId: "#{javascript:databaseDocumentId}",
+											designDocumentId: unid
+										})
+									}
+								})
+							})
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+				<xp:button id="createNodeCancel" value="Cancel">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							XSP.closeDialog("#{id:createNodeDialog}")
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+			</xe:dialogButtonBar>
+		</xe:dialog>
+	</xc:actionBar>
+	
+<!--	<xp:dataTable value="#{viewScope.folderLists[compositeData.databaseDocumentId]}" var="designNode" rows="100000">-->
+	<xp:dataTable var="designNode" rows="100000" id="designNodeTable">
+		<xp:this.value><![CDATA[#{javascript:
+			var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
+			var result = []
+			var views = foreignDB.getViews()
+			for(var i = 0; i < views.length; i++) {
+				if(views[i].isFolder()) {
+					result.push({
+						name: views[i].getName(),
+						aliases: views[i].getAliases(),
+						modified: function() {
+							var dt = views[i].getLastModified()
+							var d = dt.toJavaDate()
+							dt.recycle()
+							return d
+						}(),
+						unid: views[i].getUniversalID()
+					})
+				}
+				
+				views[i].recycle()
+			}
+			foreignDB.recycle()
+			
+			result.sort(function(a, b) { return a.name.compareTo(b.name) })
+		}]]></xp:this.value>
 		<xp:column>
 			<xp:this.facets><xp:text xp:key="header" value="Name"/></xp:this.facets>
 			<xp:link id="openView" text="#{javascript:designNode.name == '' ? '(Untitled)' : designNode.name}">

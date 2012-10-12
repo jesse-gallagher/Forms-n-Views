@@ -3,8 +3,6 @@ package frostillicus.dxl;
 import java.io.*;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import lotus.domino.*;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;

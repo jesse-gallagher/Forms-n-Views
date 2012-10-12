@@ -1,11 +1,7 @@
 package frostillicus.dxl;
 
 import java.io.*;
-
-import javax.faces.context.FacesContext;
 import javax.xml.xpath.XPathExpressionException;
-
-import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 import com.raidomatic.xml.*;
 

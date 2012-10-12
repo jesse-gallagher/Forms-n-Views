@@ -1,6 +1,13 @@
 Changelog
 =========
 
+- 2012/10/12
+	- Added the ability to create new views and folders
+- 2012/10/3
+	- Added the ability to add and remove form fields
+- 2012/10/2
+	- Added the ability to create new stylesheets
+	- Added the Codemirror editor for CSS editing
 - 2012/9/10
 	- Switched from the "soria" Dojo theme to "claro"
 	- Added default/computed formula editing for form fields

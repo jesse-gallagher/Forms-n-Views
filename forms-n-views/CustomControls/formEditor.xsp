@@ -37,6 +37,24 @@
 			<xe:formRow label="Fields" for="fieldsList" labelPosition="above">
 				<xp:dataTable id="fieldsList" value="#{javascript:designNote.fields}" var="fieldNode" indexVar="fieldIndex" rows="10000">
 					<xp:column>
+						<xp:this.facets>
+							<xp:link xp:key="footer">
+								<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
+									<xp:this.action><![CDATA[#{designNote.addField}]]></xp:this.action>
+									<xp:this.script><![CDATA[fnv_mark_dirty("#{id:formPane}")]]></xp:this.script>
+								</xp:eventHandler>
+								<xp:image url="/tango/list-add.svg" styleClass="addRemove" />
+							</xp:link>
+						</xp:this.facets>
+						<xp:link id="remove">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
+								<xp:this.action><![CDATA[#{javascript:designNote.removeField(fieldIndex)}]]></xp:this.action>
+								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:formPane}")]]></xp:this.script>
+							</xp:eventHandler>
+							<xp:image url="/tango/list-remove.svg" styleClass="addRemove" />
+						</xp:link>
+					</xp:column>
+					<xp:column>
 						<xp:link id="moveUp" rendered="#{fieldIndex != 0}">
 							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.swapFields(fieldIndex, fieldIndex-1)}]]></xp:this.action>
