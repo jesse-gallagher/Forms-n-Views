@@ -36,7 +36,7 @@ public class View extends Folder {
 	public static String create(String databaseDocumentId, String name) throws Exception {
 		DxlImporter importer = null;
 		try {
-			InputStream is = Stylesheet.class.getResourceAsStream("/dxl/view.xml");
+			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/view.xml");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			StringBuilder xmlBuilder = new StringBuilder();
 			while(reader.ready()) {

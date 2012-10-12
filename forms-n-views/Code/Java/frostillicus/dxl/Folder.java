@@ -57,7 +57,7 @@ public class Folder extends AbstractDXLDesignNote {
 	public static String create(String databaseDocumentId, String name) throws Exception {
 		DxlImporter importer = null;
 		try {
-			InputStream is = Stylesheet.class.getResourceAsStream("/dxl/folder.xml");
+			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/folder.xml");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			StringBuilder xmlBuilder = new StringBuilder();
 			while(reader.ready()) {

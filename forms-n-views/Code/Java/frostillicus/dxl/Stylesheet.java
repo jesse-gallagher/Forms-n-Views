@@ -38,7 +38,7 @@ public class Stylesheet extends AbstractDXLDesignNote {
 				name = name + ".css";
 			}
 
-			InputStream is = Stylesheet.class.getResourceAsStream("/dxl/stylesheet.xml");
+			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/stylesheet.xml");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			StringBuilder xmlBuilder = new StringBuilder();
 			while(reader.ready()) {
