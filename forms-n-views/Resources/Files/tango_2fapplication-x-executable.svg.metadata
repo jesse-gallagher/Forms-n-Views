@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1d2" sequence="3" unid="DB3DE9C0399C39B185257A540040BC05">
+<noteinfo noteid="1d2" sequence="4" unid="DB3DE9C0399C39B185257A540040BC05">
 <created><datetime dst="true">20120808T074704,37-04</datetime></created>
-<modified><datetime dst="true">20120808T074717,91-04</datetime></modified>
-<revised><datetime dst="true">20120808T074717,90-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120808T074717,90-04</datetime></lastaccessed>
+<modified><datetime dst="true">20121103T101939,02-04</datetime></modified>
+<revised><datetime dst="true">20121103T101939,00-04</datetime></revised>
+<lastaccessed><datetime dst="true">20121103T101939,00-04</datetime></lastaccessed>
 <addedtofile><datetime dst="true">20120808T074704,38-04</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
 <wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
@@ -13,6 +13,6 @@
 <item name="$FileModDT" sign="true"><datetime>20090113T163047,00-05</datetime></item>
 
 <item name="$FileNames" sign="true"><text>application-x-executable.svg</text></item>
-<item name="$TITLE" sign="true"><textlist><text>tango\application-x-executable.svg</text></textlist></item>
-<item name="$DesignerVersion"><text>8.5.3</text></item>
-<item name="$MimeType"><text>image/svg+xml</text></item></note>
+<item name="$MimeType"><text>image/svg+xml</text></item>
+<item name="$TITLE" sign="true"><textlist><text>tango/application-x-executable.svg</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>

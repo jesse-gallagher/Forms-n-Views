@@ -1,9 +1,7 @@
 package frostillicus.dxl;
 
 import java.io.Serializable;
-
 import javax.xml.xpath.XPathExpressionException;
-
 import com.raidomatic.xml.XMLNode;
 
 public class Column implements Serializable {

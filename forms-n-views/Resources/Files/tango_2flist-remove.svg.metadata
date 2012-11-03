@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1f2" sequence="3" unid="C0F2C4FCB423E7EB85257A54004AA57C">
+<noteinfo noteid="1f2" sequence="4" unid="C0F2C4FCB423E7EB85257A54004AA57C">
 <created><datetime dst="true">20120808T093520,28-04</datetime></created>
-<modified><datetime dst="true">20120808T093547,40-04</datetime></modified>
-<revised><datetime dst="true">20120808T093547,39-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120808T093547,39-04</datetime></lastaccessed>
+<modified><datetime dst="true">20121103T101957,35-04</datetime></modified>
+<revised><datetime dst="true">20121103T101957,33-04</datetime></revised>
+<lastaccessed><datetime dst="true">20121103T101957,33-04</datetime></lastaccessed>
 <addedtofile><datetime dst="true">20120808T093520,33-04</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
 <wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
@@ -14,5 +14,5 @@
 
 <item name="$FileNames" sign="true"><text>list-remove.svg</text></item>
 <item name="$MimeType"><text>image/svg+xml</text></item>
-<item name="$TITLE" sign="true"><textlist><text>tango\list-remove.svg</text></textlist></item>
+<item name="$TITLE" sign="true"><textlist><text>tango/list-remove.svg</text></textlist></item>
 <item name="$DesignerVersion"><text>8.5.3</text></item></note>

@@ -43,7 +43,6 @@
 	<xc:actionBar>
 		<xp:button id="createStylesheet" value="Create Stylesheet">
 			<xp:eventHandler event="onclick" submit="false"><xp:this.script><![CDATA[
-				//frostillicus.dxl.Stylesheet.create(databaseDocumentId, "hey.css")
 				XSP.openDialog("#{id:createStylesheetDialog}")
 			]]></xp:this.script></xp:eventHandler>
 		</xp:button>

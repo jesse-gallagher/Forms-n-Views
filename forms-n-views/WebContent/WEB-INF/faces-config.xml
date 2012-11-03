@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config>
   <managed-bean>
+    <managed-bean-name>DatabaseManager</managed-bean-name>
+    <managed-bean-class>frostillicus.DatabaseManager</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
     <managed-bean-name>flashScope</managed-bean-name>
     <managed-bean-class>java.util.HashMap</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
