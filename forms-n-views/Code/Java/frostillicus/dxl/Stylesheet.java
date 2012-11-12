@@ -26,7 +26,7 @@ public class Stylesheet extends AbstractDXLDesignNote {
 	}
 	public void setContent(String content) throws XPathExpressionException {
 		XMLNode dataNode = this.getRootNode().selectSingleNode("/stylesheetresource/filedata");
-		dataNode.setTextContent(new BASE64Encoder().encodeBuffer(content.getBytes()).trim());
+		dataNode.setTextContent(new BASE64Encoder().encodeBuffer(content.getBytes()).replace("\r", ""));
 		//dataNode.setTextContent(Base64.encodeBase64String(content.getBytes()));
 	}
 

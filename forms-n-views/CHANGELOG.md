@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- 2012/11/12
+	- Fixed a bug when saving stylesheets (for some reason, it sometimes added extra CR characters to the BASE64 output)
 - 2012/10/12
 	- Added the ability to create new views and folders
 - 2012/10/3
