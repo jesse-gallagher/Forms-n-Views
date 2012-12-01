@@ -4,44 +4,89 @@
 		<xp:dominoDocument var="databaseDoc" ignoreRequestParams="true" action="openDocument" documentId="${compositeData.databaseDocumentId}">
 			<xp:this.postOpenDocument><![CDATA[#{javascript:
 				getComponent("formsPane").setTitle(databaseDoc.getItemValueString("FilePath") + " - Forms")
-				
-				if(!viewScope.containsKey("formData")) {
-					viewScope.put("formData", new java.util.HashMap())
-				}
-				
-				if(!viewScope.formData.containsKey(compositeData.databaseDocumentId)) {		
-					var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
-					var result = []
-					var forms = foreignDB.getForms()
-					for(var i = 0; i < forms.length; i++) {
-						if(!forms[i].isSubForm()) {
-							var unid = @RightBack(@LeftBack(forms[i].getURL(), "?OpenForm"), "/")
-							var formDoc = foreignDB.getDocumentByUNID(unid)
-						
-							result.push({
-								name: forms[i].getName(),
-								aliases: forms[i].getAliases(),
-								modified: function() {
-									var dt = formDoc.getLastModified()
-									var d = dt.toJavaDate()
-									dt.recycle()
-									return d
-								}(),
-								unid: unid
-							})
-						}
-						
-						forms[i].recycle()
-					}
-					foreignDB.recycle()
-					
-					viewScope.formData[compositeData.databaseDocumentId] = result.sort(function(a, b) { return a.name.compareTo(b.name) })
-				}
 			}]]></xp:this.postOpenDocument>
 		</xp:dominoDocument>
 	</xp:this.data>
+	<xp:this.dataContexts>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+	</xp:this.dataContexts>
 	
-	<xp:dataTable value="#{viewScope.formData[compositeData.databaseDocumentId]}" var="designNode" rows="100000">
+	<xc:actionBar>
+		<xp:button id="createElement" value="Create Form">
+			<xp:eventHandler event="onclick" submit="false"><xp:this.script><![CDATA[
+				XSP.openDialog("#{id:createElementDialog}")
+			]]></xp:this.script></xp:eventHandler>
+		</xp:button>
+		<xe:dialog title="Create Form" id="createElementDialog">
+			<xe:dialogContent>
+				<xe:formTable>
+					<xe:formRow label="Name">
+						<xe:djTextBox id="newElementName" required="true"/>
+					</xe:formRow>
+				</xe:formTable>
+			</xe:dialogContent>
+			<xe:dialogButtonBar>
+				<xp:button id="createElementSubmit" value="Create">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							var deferred = DesignServices.createForm("#{javascript:databaseDocumentId}", dojo.byId("#{id:newElementName}").value)
+							deferred.addCallback(function(unid) {
+								XSP.closeDialog("#{id:createElementDialog}")
+								
+								XSP.partialRefreshGet("#{id:elementListTable}", {
+									onComplete: function() {
+										var pane = dijit.byId("#{id:contentPane}")
+										pane.createTab({
+											content: "form",
+											databaseDocumentId: "#{javascript:databaseDocumentId}",
+											designDocumentId: unid
+										})
+									}
+								})
+							})
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+				<xp:button id="createElementCancel" value="Cancel">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[
+							XSP.closeDialog("#{id:createElementDialog}")
+						]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button>
+			</xe:dialogButtonBar>
+		</xe:dialog>
+	</xc:actionBar>
+	
+	<xp:dataTable id="elementListTable" var="designNode" rows="100000">
+		<xp:this.value><![CDATA[#{javascript:
+			var foreignDB = session.getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"))
+			var result = []
+			var forms = foreignDB.getForms()
+			for(var i = 0; i < forms.length; i++) {
+				if(!forms[i].isSubForm()) {
+					var unid = @RightBack(@LeftBack(forms[i].getURL(), "?OpenForm"), "/")
+					var formDoc = foreignDB.getDocumentByUNID(unid)
+				
+					result.push({
+						name: forms[i].getName(),
+						aliases: forms[i].getAliases(),
+						modified: function() {
+							var dt = formDoc.getLastModified()
+							var d = dt.toJavaDate()
+							dt.recycle()
+							return d
+						}(),
+						unid: unid
+					})
+				}
+				
+				forms[i].recycle()
+			}
+			foreignDB.recycle()
+			
+			return result.sort(function(a, b) { return a.name.compareTo(b.name) })
+		}]]></xp:this.value>
 		<xp:column>
 			<xp:this.facets><xp:text xp:key="header" value="Name"/></xp:this.facets>
 			<xp:link id="openView" text="#{javascript:designNode.name == '' ? '(Untitled)' : designNode.name}">

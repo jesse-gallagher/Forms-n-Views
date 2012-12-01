@@ -44,6 +44,28 @@ public class Column implements Serializable {
 	public String getSort() { return this.node.getAttribute("sort"); }
 	public void setSort(String sort) { this.node.setAttribute("sort", sort); }
 
+	public String getTitle() {
+		XMLNode columnHeader = null;
+		try {
+			columnHeader = this.node.selectSingleNode("columnheader");
+		} catch(XPathExpressionException xee) { }
+		if(columnHeader == null) {
+			return "";
+		}
+		return columnHeader.getAttribute("title");
+	}
+	public void setTitle(String title) {
+
+		XMLNode columnHeader = null;
+		try {
+			columnHeader = this.node.selectSingleNode("columnheader");
+		} catch(XPathExpressionException xee) { }
+		if(columnHeader == null) {
+			this.node.addChildElement("columnheader");
+		}
+		columnHeader.setAttribute("title", title);
+	}
+
 	public String getFormula() throws XPathExpressionException {
 		XMLNode formulaNode = this.node.selectSingleNode("code[@event='value']/formula");
 		if(formulaNode != null) {

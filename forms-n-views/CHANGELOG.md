@@ -1,6 +1,9 @@
 Changelog
 =========
 
+- 2012/12/1
+	- Added the ability to create new forms
+	- Added the ability to modify view/folder column titles
 - 2012/11/12
 	- Fixed a bug when saving stylesheets (for some reason, it sometimes added extra CR characters to the BASE64 output)
 - 2012/10/12

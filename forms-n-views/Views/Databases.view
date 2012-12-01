@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
-<note class='view' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
- replicaid='85257A54003A66B6'>
-<noteinfo noteid='19e' unid='0C1CEBFD856C436885257A54003AD10D' sequence='5'>
+<note default='true' class='view' xmlns='http://www.lotus.com/dxl' version='8.5'
+ maintenanceversion='3.0' replicaid='85257A54003A66B6'>
+<noteinfo noteid='19e' unid='0C1CEBFD856C436885257A54003AD10D' sequence='6'>
 <created><datetime dst='true'>20120808T064226,05-04</datetime></created>
-<modified><datetime dst='true'>20120808T072132,24-04</datetime></modified>
-<revised><datetime dst='true'>20120808T072132,22-04</datetime></revised>
-<lastaccessed><datetime dst='true'>20120808T072132,22-04</datetime></lastaccessed>
+<modified><datetime>20121201T112250,93-05</datetime></modified>
+<revised><datetime>20121201T112250,91-05</datetime></revised>
+<lastaccessed><datetime>20121201T112250,91-05</datetime></lastaccessed>
 <addedtofile><datetime dst='true'>20120808T064226,14-04</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
 <wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
@@ -36,6 +36,6 @@ AAAAAAAAAAAAAAAAAAAAAAQAAAAAAP//AAAAAAAAAAAAAAAAAABCAAAAAAABAP///wAFAP///wAB
 AAAAAAAAAAAAAAAAAAEA////AAEA////AAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAIAAAAAAABAA==
 </rawitemdata></item>
 <item name='$Comment' sign='true'><text/></item>
-<item name='$Flags'><text>PY</text></item>
+<item name='$Flags'><text>PYd</text></item>
 <item name='$DesignerVersion'><text>8.5.3</text></item></note>
 

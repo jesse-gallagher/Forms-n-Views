@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="15e" sequence="74" unid="6D1C450B9F2DCF7085257A53005CDEEF">
+<noteinfo noteid="15e" sequence="82" unid="6D1C450B9F2DCF7085257A53005CDEEF">
 <created><datetime dst="true">20120807T125423,83-04</datetime></created>
-<modified><datetime dst="true">20120830T165127,52-04</datetime></modified>
-<revised><datetime dst="true">20120830T165127,50-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120830T165127,50-04</datetime></lastaccessed>
+<modified><datetime>20121112T133830,28-05</datetime></modified>
+<revised><datetime>20121112T133830,26-05</datetime></revised>
+<lastaccessed><datetime>20121112T133830,26-05</datetime></lastaccessed>
 <addedtofile><datetime dst="true">20120808T063754,05-04</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
-<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
-<item name="$TITLE"><text>style.css</text></item>
-<item name="$MimeType"><text>text/css</text></item>
-<item name="$Flags"><text>34C=Q</text></item>
-<item name="$MimeCharSet"><text>UTF-8</text></item>
+<item name="$TITLE" sign="true"><text>style.css</text></item>
 <item name="$DesignerVersion"><text>8.5.3</text></item>
+<item name="$MimeCharSet"><text>UTF-8</text></item>
+<item name="$FileModDT" sign="true"><datetime>20121112T133830,26-05</datetime></item>
+<item name="$FileNames" sign="true"><text>style.css</text></item>
 
 
-<item name="$FileNames" sign="true"><text>style.css</text></item></note>
+<item name="$Flags"><text>=34QC</text></item>
+<item name="$FlagsExt" sign="true"><text>D</text></item></note>

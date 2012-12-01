@@ -1,11 +1,15 @@
 package frostillicus.dxl;
 
 import java.util.*;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import javax.xml.xpath.XPathExpressionException;
 
+import lotus.domino.*;
+
+import com.ibm.xsp.extlib.util.ExtLibUtil;
 import com.raidomatic.xml.*;
+
+import frostillicus.FNVUtil;
 
 public class Form extends AbstractDXLDesignNote {
 	private static final long serialVersionUID = 7167094282778445465L;
@@ -212,5 +216,37 @@ public class Form extends AbstractDXLDesignNote {
 			node = node.addChildElement("formula");
 			return node;
 		}
+	}
+
+	public static String create(String databaseDocumentId, String name) throws Exception {
+		DxlImporter importer = null;
+		try {
+			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/form.xml");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			StringBuilder xmlBuilder = new StringBuilder();
+			while(reader.ready()) {
+				xmlBuilder.append(reader.readLine());
+				xmlBuilder.append("\n");
+			}
+			is.close();
+			String xml = xmlBuilder.toString().replace("name=\"\"", "name=\"" + FNVUtil.xmlEncode(name) + "\"");
+			xml = xml.replace("<item name='$$ScriptName' summary='false' sign='true'><text/></item>", "<item name='$$ScriptName' summary='false' sign='true'><text>" + FNVUtil.xmlEncode(name) + "</text></item>");
+
+			importer = ExtLibUtil.getCurrentSession().createDxlImporter();
+			importer.setDesignImportOption(DxlImporter.DXLIMPORTOPTION_REPLACE_ELSE_CREATE);
+			importer.setReplicaRequiredForReplaceOrUpdate(false);
+			Document databaseDoc = ExtLibUtil.getCurrentDatabase().getDocumentByUNID(databaseDocumentId);
+			Database foreignDB = ExtLibUtil.getCurrentSessionAsSignerWithFullAccess().getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"));
+			importer.importDxl(xml, foreignDB);
+
+			Document importedDoc = foreignDB.getDocumentByID(importer.getFirstImportedNoteID());
+			return importedDoc.getUniversalID();
+		} catch(Exception e) {
+			e.printStackTrace();
+			if(importer != null) {
+				System.out.println(importer.getLog());
+			}
+		}
+		return null;
 	}
 }

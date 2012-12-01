@@ -104,6 +104,12 @@
 						<xe:dialog id="columnAdvancedDialog" title="Advanced Properties">
 							<xe:dialogContent>
 								<xe:formTable>
+									<xe:formRow label="Title">
+										<xp:inputText id="columnTitle" value="#{columnNode.title}">
+											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnTitle" disableValidators="true"
+												script="fnv_mark_dirty('#{id:viewPane}')" />
+										</xp:inputText>
+									</xe:formRow>
 									<xe:formRow label="Display">
 										<xp:checkBox id="columnResizable" value="#{columnNode.resizableString}" onclick="fnv_mark_dirty('#{id:viewPane}')">
 											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnResizable" disableValidators="true"/>
