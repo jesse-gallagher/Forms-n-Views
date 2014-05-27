@@ -124,3 +124,7 @@ table textarea.code {
 	font-size: 12px;
 	white-space: pre;
 }
+
+[aria-invalid='true'] {
+	border: 1px solid red !important;
+}

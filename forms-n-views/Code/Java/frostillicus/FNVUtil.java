@@ -7,21 +7,48 @@ import javax.faces.context.FacesContext;
 import com.ibm.xsp.component.UIViewRootEx2;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class FNVUtil {
-	private FNVUtil() { }
+import org.openntf.domino.*;
+import org.openntf.domino.utils.XSPUtil;
 
-	public static void dojoPublish(String channel, String type, String message) {
+public enum FNVUtil {
+	;
+
+	public static Session getSession() {
+		return XSPUtil.getCurrentSession();
+	}
+	public static Session getSessionAsSigner() {
+		return XSPUtil.getCurrentSessionAsSigner();
+	}
+	public static Session getSessionAsSignerWithFullAccess() {
+		return XSPUtil.getCurrentSessionAsSignerWithFullAccess();
+	}
+	public static Database getDatabase() {
+		return XSPUtil.getCurrentDatabase();
+	}
+
+	public static Database getDatabaseForDocumentId(final String databaseDocumentId) {
+		Document databaseDoc = FNVUtil.getDatabase().getDocumentByUNID(databaseDocumentId);
+		Database foreignDB = FNVUtil.getSessionAsSignerWithFullAccess().getDatabase(databaseDoc.getItemValueString("Server"), databaseDoc.getItemValueString("FilePath"));
+		return foreignDB;
+	}
+
+
+	public static Object resolveVariable(final String name) {
+		return ExtLibUtil.resolveVariable(FacesContext.getCurrentInstance(), name);
+	}
+
+	public static void dojoPublish(final String channel, final String type, final String message) {
 		getViewRoot().postScript("dojo.publish(\"" + channel.replace("\"", "\\\"") + "\", [{ type: \"" + type.replace("\"", "\\\"") + "\", message: \"" + message.replace("\"", "\\\"") + "\" }])");
 	}
-	public static void toaster(String message) {
+	public static void toaster(final String message) {
 		dojoPublish("/toaster", "message", message);
 	}
 
-	public static void alert(String message) {
+	public static void alert(final String message) {
 		getViewRoot().postScript("XSP.alert(\"" + message.replace("\"", "\\\"").replace("\r\n", "\n").replace("\n", "\\n") + "\")");
 	}
 
-	public static void invalidateField(FacesContext facesContext, UIInput input, String errorMessage) {
+	public static void invalidateField(final FacesContext facesContext, final UIInput input, final String errorMessage) {
 		input.setValid(false);
 
 		FacesMessage message = new FacesMessage(errorMessage);
@@ -30,9 +57,9 @@ public class FNVUtil {
 
 
 	private static UIViewRootEx2 getViewRoot() {
-		return (UIViewRootEx2)ExtLibUtil.resolveVariable(ExtLibUtil.getXspContext().getFacesContext(), "view");
+		return (UIViewRootEx2)resolveVariable("view");
 	}
-	public static String xmlEncode(String text) {
+	public static String xmlEncode(final String text) {
 		StringBuilder result = new StringBuilder();
 
 		for(int i = 0; i < text.length(); i++) {

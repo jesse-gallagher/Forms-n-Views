@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1c2" sequence="19" unid="C29D6CEB68384EBF85257A54003E71DE">
-<created><datetime dst="true">20120808T072203,82-04</datetime></created>
-<modified><datetime dst="true">20120808T072413,38-04</datetime></modified>
-<revised><datetime dst="true">20120808T072413,36-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120808T072413,36-04</datetime></lastaccessed>
-<addedtofile><datetime dst="true">20120808T072203,82-04</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
-<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.1" replicaid="85257CE50053B09E" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="4be" sequence="8" unid="8EE6D2D14F681F9985257CE50053BC39">
+<created><datetime dst="true">20140527T111436,73-04</datetime></created>
+<modified><datetime dst="true">20140527T111748,71-04</datetime></modified>
+<revised><datetime dst="true">20140527T111748,70-04</datetime></revised>
+<lastaccessed><datetime dst="true">20140527T111748,70-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20140527T111436,73-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=IKSG</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=IKSG</name></wassignedby>
 <item name="$Flags"><text>gC~4;</text></item>
 <item name="$TITLE"><text>abbreviatedName.xsp</text></item>
 
 
 
+
+<item name="$FileNames" sign="true"><text>abbreviatedName.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5</text></item>
 
 
 
-
-<item name="$FileNames" sign="true"><text>abbreviatedName.xsp</text></item>
 
 </note>

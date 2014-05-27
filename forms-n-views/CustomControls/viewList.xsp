@@ -45,7 +45,6 @@
 	<xc:actionBar>
 		<xp:button id="createView" value="Create View">
 			<xp:eventHandler event="onclick" submit="false"><xp:this.script><![CDATA[
-				//frostillicus.dxl.Stylesheet.create(databaseDocumentId, "hey.css")
 				XSP.openDialog("#{id:createViewDialog}")
 			]]></xp:this.script></xp:eventHandler>
 		</xp:button>

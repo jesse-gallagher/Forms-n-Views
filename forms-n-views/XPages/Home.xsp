@@ -20,7 +20,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.dxl.View.create(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createView(databaseDocumentId, name)
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createFolder">

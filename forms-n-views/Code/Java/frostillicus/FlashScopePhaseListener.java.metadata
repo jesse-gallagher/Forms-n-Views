@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="242" sequence="4" unid="BD2184DC3782858D85257A55003FEE09">
-<created><datetime dst="true">20120809T073817,05-04</datetime></created>
-<modified><datetime dst="true">20120809T073817,60-04</datetime></modified>
-<revised><datetime dst="true">20120809T073817,59-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120809T073817,59-04</datetime></lastaccessed>
-<addedtofile><datetime dst="true">20120809T073817,05-04</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
-<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.1" replicaid="85257CE50053B09E" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="4f6" sequence="5" unid="17332C1E961684BA85257CE50053BD47">
+<created><datetime dst="true">20140527T111439,43-04</datetime></created>
+<modified><datetime dst="true">20140527T111727,99-04</datetime></modified>
+<revised><datetime dst="true">20140527T111727,98-04</datetime></revised>
+<lastaccessed><datetime dst="true">20140527T111727,98-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20140527T111439,45-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=IKSG</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=IKSG</name></wassignedby>
 <item name="$Flags"><text>34567Cg~[</text></item>
 <item name="$TITLE"><text>frostillicus/FlashScopePhaseListener.java</text></item>
 <item name="$DesignerVersion"><text>8.5.3</text></item>

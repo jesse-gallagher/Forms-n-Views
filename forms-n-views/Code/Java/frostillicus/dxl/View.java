@@ -11,7 +11,7 @@ import org.openntf.domino.utils.xml.*;
 
 import frostillicus.FNVUtil;
 
-public class View extends Folder {
+public class View extends AbstractFolder {
 	private static final long serialVersionUID = -8774232556021141733L;
 
 	public View(final String databaseDocumentId, final String viewDocumentId) throws Exception {
@@ -34,6 +34,7 @@ public class View extends Folder {
 	}
 
 	public static String create(final String databaseDocumentId, final String name) throws Exception {
+		System.out.println("calling create in View");
 		DxlImporter importer = null;
 		try {
 			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/view.xml");
