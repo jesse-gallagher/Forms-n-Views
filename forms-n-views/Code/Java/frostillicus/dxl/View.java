@@ -7,14 +7,14 @@ import javax.xml.xpath.XPathExpressionException;
 import lotus.domino.*;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.raidomatic.xml.*;
+import org.openntf.domino.utils.xml.*;
 
 import frostillicus.FNVUtil;
 
 public class View extends Folder {
 	private static final long serialVersionUID = -8774232556021141733L;
 
-	public View(String databaseDocumentId, String viewDocumentId) throws Exception {
+	public View(final String databaseDocumentId, final String viewDocumentId) throws Exception {
 		super(databaseDocumentId, viewDocumentId);
 	}
 
@@ -26,14 +26,14 @@ public class View extends Folder {
 		}
 		return null;
 	}
-	public void setSelectionFormula(String selectionFormula) throws XPathExpressionException {
+	public void setSelectionFormula(final String selectionFormula) throws XPathExpressionException {
 		XMLNode formula = getDxl().selectSingleNode("/view/code[@event='selection']/formula");
 		if(formula != null) {
 			formula.setTextContent(selectionFormula);
 		}
 	}
 
-	public static String create(String databaseDocumentId, String name) throws Exception {
+	public static String create(final String databaseDocumentId, final String name) throws Exception {
 		DxlImporter importer = null;
 		try {
 			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/view.xml");

@@ -3,7 +3,7 @@ package frostillicus.dxl;
 import java.io.*;
 import javax.xml.xpath.XPathExpressionException;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.raidomatic.xml.*;
+import org.openntf.domino.utils.xml.*;
 
 import frostillicus.FNVUtil;
 import sun.misc.BASE64Encoder;
@@ -13,7 +13,7 @@ import lotus.domino.*;
 
 public class Stylesheet extends AbstractDXLDesignNote {
 	private static final long serialVersionUID = -3543549758559295423L;
-	public Stylesheet(String databaseDocumentId, String designDocumentId) throws Exception {
+	public Stylesheet(final String databaseDocumentId, final String designDocumentId) throws Exception {
 		super(databaseDocumentId, designDocumentId);
 	}
 
@@ -24,13 +24,13 @@ public class Stylesheet extends AbstractDXLDesignNote {
 		return new String(new BASE64Decoder().decodeBuffer(fileData), "UTF-8");
 		//return new String(Base64.decodeBase64(fileData), "UTF-8");
 	}
-	public void setContent(String content) throws XPathExpressionException {
+	public void setContent(final String content) throws XPathExpressionException {
 		XMLNode dataNode = this.getRootNode().selectSingleNode("/stylesheetresource/filedata");
 		dataNode.setTextContent(new BASE64Encoder().encodeBuffer(content.getBytes()).replace("\r", ""));
 		//dataNode.setTextContent(Base64.encodeBase64String(content.getBytes()));
 	}
 
-	public static String create(String databaseDocumentId, String name) throws Exception {
+	public static String create(final String databaseDocumentId, String name) throws Exception {
 		DxlImporter importer = null;
 		try {
 			// Designer is case-sensitive too

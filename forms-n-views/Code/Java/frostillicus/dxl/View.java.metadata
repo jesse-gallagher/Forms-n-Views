@@ -1,24 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="85257A54003A66B6" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="22a" sequence="61" unid="5F095D8ACBD3D74D85257A55003C91FE">
-<created><datetime dst="true">20120809T070135,34-04</datetime></created>
-<modified><datetime dst="true">20120830T164608,52-04</datetime></modified>
-<revised><datetime dst="true">20120830T164608,50-04</datetime></revised>
-<lastaccessed><datetime dst="true">20120830T164608,50-04</datetime></lastaccessed>
-<addedtofile><datetime dst="true">20120809T070135,34-04</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jesse Gallagher/O=MTC</name></updatedby>
-<wassignedby><name>CN=Jesse Gallagher/O=MTC</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="1.1" replicaid="85257CE50053B09E" version="9.0" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="4da" sequence="10" unid="DC12C72BB1C772ED85257CE50053BCC9">
+<created><datetime dst="true">20140527T111438,17-04</datetime></created>
+<modified><datetime dst="true">20140527T112126,42-04</datetime></modified>
+<revised><datetime dst="true">20140527T112126,41-04</datetime></revised>
+<lastaccessed><datetime dst="true">20140527T112126,41-04</datetime></lastaccessed>
+<addedtofile><datetime dst="true">20140527T111438,17-04</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jesse Gallagher/O=IKSG</name></updatedby>
+<wassignedby><name>CN=Jesse Gallagher/O=IKSG</name></wassignedby>
 <item name="$Flags"><text>34567Cg~[</text></item>
 <item name="$TITLE"><text>frostillicus/dxl/View.java</text></item>
-
-
-
-
 
 
 
 <item name="$DesignerVersion"><text>8.5.3</text></item>
 
 
-<item name="$FileNames" sign="true"><text>frostillicus/dxl/View.java</text></item>
-
-</note>
+<item name="$FileNames" sign="true"><text>frostillicus/dxl/View.java</text></item></note>

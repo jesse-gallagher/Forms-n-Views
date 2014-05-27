@@ -7,14 +7,14 @@ import javax.xml.xpath.XPathExpressionException;
 import lotus.domino.*;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.raidomatic.xml.*;
+import org.openntf.domino.utils.xml.*;
 
 import frostillicus.FNVUtil;
 
 public class Folder extends AbstractDXLDesignNote {
 	private static final long serialVersionUID = -8774232556021141733L;
 
-	public Folder(String databaseDocumentId, String designDocumentId) throws Exception {
+	public Folder(final String databaseDocumentId, final String designDocumentId) throws Exception {
 		super(databaseDocumentId, designDocumentId);
 	}
 
@@ -45,16 +45,16 @@ public class Folder extends AbstractDXLDesignNote {
 		node.setAttribute("sortnocase", "true");
 		node.setAttribute("showaslinks", "false");
 	}
-	public void removeColumn(int index) throws XPathExpressionException {
+	public void removeColumn(final int index) throws XPathExpressionException {
 		List<XMLNode> columnNodes = getDxl().selectNodes("//column");
 		columnNodes.remove(index);
 	}
-	public void swapColumns(int a, int b) throws XPathExpressionException {
+	public void swapColumns(final int a, final int b) throws XPathExpressionException {
 		XMLNodeList columnNodes = (XMLNodeList)getDxl().selectNodes("//column");
 		columnNodes.swap(a, b);
 	}
 
-	public static String create(String databaseDocumentId, String name) throws Exception {
+	public static String create(final String databaseDocumentId, final String name) throws Exception {
 		DxlImporter importer = null;
 		try {
 			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/folder.xml");

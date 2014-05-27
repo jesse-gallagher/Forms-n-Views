@@ -6,8 +6,8 @@ import java.util.List;
 import lotus.domino.*;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.raidomatic.xml.XMLDocument;
-import com.raidomatic.xml.XMLNode;
+import org.openntf.domino.utils.xml.XMLDocument;
+import org.openntf.domino.utils.xml.XMLNode;
 
 @SuppressWarnings("serial")
 public abstract class AbstractDXLDesignNote implements Serializable {
@@ -19,7 +19,7 @@ public abstract class AbstractDXLDesignNote implements Serializable {
 	protected String getTemplateName() { return "abstract"; }
 
 
-	public AbstractDXLDesignNote(String databaseDocumentId, String designDocumentId) throws Exception {
+	public AbstractDXLDesignNote(final String databaseDocumentId, final String designDocumentId) throws Exception {
 		this.databaseDocumentId = databaseDocumentId;
 		this.designDocumentId = designDocumentId;
 
@@ -39,8 +39,8 @@ public abstract class AbstractDXLDesignNote implements Serializable {
 	}
 
 	public String getName() { return this.getRootNode().getAttribute("name"); }
-	public void setName(String name) { this.getRootNode().setAttribute("name", name); }
-	public void setName(List<String> name) {
+	public void setName(final String name) { this.getRootNode().setAttribute("name", name); }
+	public void setName(final List<String> name) {
 		// Sometimes the page provides a list for no reason
 		this.setName(name.get(0));
 	}
@@ -48,7 +48,7 @@ public abstract class AbstractDXLDesignNote implements Serializable {
 	public String getAlias() {
 		return this.getRootNode().getAttribute("alias");
 	}
-	public void setAlias(String alias) {
+	public void setAlias(final String alias) {
 		this.getRootNode().setAttribute("alias", alias);
 	}
 

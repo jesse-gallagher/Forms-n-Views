@@ -7,14 +7,14 @@ import javax.xml.xpath.XPathExpressionException;
 import lotus.domino.*;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.raidomatic.xml.*;
+import org.openntf.domino.utils.xml.*;
 
 import frostillicus.FNVUtil;
 
 public class Form extends AbstractDXLDesignNote {
 	private static final long serialVersionUID = 7167094282778445465L;
 
-	public Form(String databaseDocumentId, String designDocumentId) throws Exception {
+	public Form(final String databaseDocumentId, final String designDocumentId) throws Exception {
 		super(databaseDocumentId, designDocumentId);
 	}
 
@@ -27,11 +27,11 @@ public class Form extends AbstractDXLDesignNote {
 		return result;
 	}
 
-	public void removeField(int index) throws XPathExpressionException {
+	public void removeField(final int index) throws XPathExpressionException {
 		List<XMLNode> fieldNodes = getDxl().selectNodes("//field");
 		fieldNodes.remove(index);
 	}
-	public void swapFields(int a, int b) throws XPathExpressionException {
+	public void swapFields(final int a, final int b) throws XPathExpressionException {
 		XMLNodeList fieldNodes = (XMLNodeList)getDxl().selectNodes("//field");
 		fieldNodes.swap(a, b);
 	}
@@ -63,48 +63,48 @@ public class Form extends AbstractDXLDesignNote {
 
 		private final XMLNode node;
 
-		public Field(XMLNode node) {
+		public Field(final XMLNode node) {
 			this.node = node;
 		}
 
 		public String getName() { return node.getAttribute("name"); }
-		public void setName(String name) { node.setAttribute("name", name); }
+		public void setName(final String name) { node.setAttribute("name", name); }
 
 		public String getType() { return node.getAttribute("type"); }
-		public void setType(String type) { node.setAttribute("type", type); }
+		public void setType(final String type) { node.setAttribute("type", type); }
 
 		public String getKind() { return node.getAttribute("kind"); }
-		public void setKind(String kind) { node.setAttribute("kind", kind); }
+		public void setKind(final String kind) { node.setAttribute("kind", kind); }
 
 		public boolean isAllowMultiValues() { return this.getAllowMultiValuesString().equals("true"); }
-		public void setAllowMultiValues(boolean allowMultiValues) { this.setAllowMultiValuesString(String.valueOf(allowMultiValues)); }
+		public void setAllowMultiValues(final boolean allowMultiValues) { this.setAllowMultiValuesString(String.valueOf(allowMultiValues)); }
 		public String getAllowMultiValuesString() { return node.getAttribute("allowmultivalues"); }
-		public void setAllowMultiValuesString(String allowMultiValues) { node.setAttribute("allowmultivalues", allowMultiValues); }
+		public void setAllowMultiValuesString(final String allowMultiValues) { node.setAttribute("allowmultivalues", allowMultiValues); }
 
 		public boolean isProtected() { return this.getProtectedString().equals("true"); }
-		public void setProtected(boolean _protected) { this.setProtectedString(String.valueOf(_protected)); }
+		public void setProtected(final boolean _protected) { this.setProtectedString(String.valueOf(_protected)); }
 		public String getProtectedString() { return node.getAttribute("protected"); }
-		public void setProtectedString(String _protected) { node.setAttribute("protected", _protected); }
+		public void setProtectedString(final String _protected) { node.setAttribute("protected", _protected); }
 
 		public boolean isSign() { return this.getSignString().equals("true"); }
-		public void setSign(boolean sign) { this.setSignString(String.valueOf(sign)); }
+		public void setSign(final boolean sign) { this.setSignString(String.valueOf(sign)); }
 		public String getSignString() { return node.getAttribute("sign"); }
-		public void setSignString(String sign) { node.setAttribute("sign", sign); }
+		public void setSignString(final String sign) { node.setAttribute("sign", sign); }
 
 		public boolean getSeal() { return this.getSealString().equals("true"); }
-		public void setSeal(boolean seal) { this.setSealString(String.valueOf(seal)); }
+		public void setSeal(final boolean seal) { this.setSealString(String.valueOf(seal)); }
 		public String getSealString() { return node.getAttribute("seal"); }
-		public void setSealString(String seal) { node.setAttribute("seal", seal); }
+		public void setSealString(final String seal) { node.setAttribute("seal", seal); }
 
 		public boolean isLookUpAddressOnRefresh() { return this.getLookUpAddressOnRefreshString().equals("true"); }
-		public void setLookUpAddressOnRefresh(boolean lookUpAddressOnRefresh) { this.setLookUpAddressOnRefreshString(String.valueOf(lookUpAddressOnRefresh)); }
+		public void setLookUpAddressOnRefresh(final boolean lookUpAddressOnRefresh) { this.setLookUpAddressOnRefreshString(String.valueOf(lookUpAddressOnRefresh)); }
 		public String getLookUpAddressOnRefreshString() { return this.node.getAttribute("lookupaddressonrefresh"); }
-		public void setLookUpAddressOnRefreshString(String lookUpAddressOnRefresh) { this.node.setAttribute("lookupaddressonrefresh", lookUpAddressOnRefresh); }
+		public void setLookUpAddressOnRefreshString(final String lookUpAddressOnRefresh) { this.node.setAttribute("lookupaddressonrefresh", lookUpAddressOnRefresh); }
 
 		public boolean isLookUpEachChar() { return this.getLookUpEachCharString().equals("true"); }
-		public void setLookUpEachChar(boolean lookUpEachChar) { this.setLookUpEachCharString(String.valueOf(lookUpEachChar)); }
+		public void setLookUpEachChar(final boolean lookUpEachChar) { this.setLookUpEachCharString(String.valueOf(lookUpEachChar)); }
 		public String getLookUpEachCharString() { return this.node.getAttribute("lookupeachchar"); }
-		public void setLookUpEachCharString(String lookUpEachChar) { this.node.setAttribute("lookupeachchar", lookUpEachChar); }
+		public void setLookUpEachCharString(final String lookUpEachChar) { this.node.setAttribute("lookupeachchar", lookUpEachChar); }
 
 		public String getDefaultValueFormula() {
 			XMLNode node = this.getDefaultValueFormulaNode();
@@ -113,7 +113,7 @@ public class Form extends AbstractDXLDesignNote {
 			}
 			return "";
 		}
-		public void setDefaultValueFormula(String defaultValueFormula) {
+		public void setDefaultValueFormula(final String defaultValueFormula) {
 			// DXL is not happy with empty default value nodes, so delete when empty
 			XMLNode node = this.getDefaultValueFormulaNode();
 			if(defaultValueFormula == null || defaultValueFormula.length() == 0) {
@@ -149,7 +149,7 @@ public class Form extends AbstractDXLDesignNote {
 				return type;
 			}
 		}
-		public void setFieldType(String fieldType) {
+		public void setFieldType(final String fieldType) {
 			try {
 				if(fieldType.equals("dialoglist") || fieldType.equals("checkbox") || fieldType.equals("radiobutton") || fieldType.equals("combobox")) {
 					this.node.setAttribute("type", "keyword");
@@ -186,9 +186,7 @@ public class Form extends AbstractDXLDesignNote {
 
 		private XMLNode getKeywordsNode() {
 			XMLNode node = null;
-			try {
-				node = this.node.selectSingleNode("keywords");
-			} catch(XPathExpressionException xee) { }
+			node = this.node.selectSingleNode("keywords");
 
 			if(node == null) {
 				node = this.node.addChildElement("keywords");
@@ -197,16 +195,12 @@ public class Form extends AbstractDXLDesignNote {
 		}
 		private XMLNode getDefaultValueFormulaNode() {
 			XMLNode node = null;
-			try {
-				node = this.node.selectSingleNode("code[@event='defaultvalue']");
-			} catch(XPathExpressionException xee) { }
+			node = this.node.selectSingleNode("code[@event='defaultvalue']");
 
 			if(node == null) {
 				return null;
 			} else {
-				try {
-					node = node.selectSingleNode("formula");
-				} catch(XPathExpressionException xee) { }
+				node = node.selectSingleNode("formula");
 			}
 			return node;
 		}
@@ -218,7 +212,7 @@ public class Form extends AbstractDXLDesignNote {
 		}
 	}
 
-	public static String create(String databaseDocumentId, String name) throws Exception {
+	public static String create(final String databaseDocumentId, final String name) throws Exception {
 		DxlImporter importer = null;
 		try {
 			InputStream is = Stylesheet.class.getResourceAsStream("/frostillicus/dxl/form.xml");
