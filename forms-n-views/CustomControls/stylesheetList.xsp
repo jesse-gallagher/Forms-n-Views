@@ -58,7 +58,7 @@
 				<xp:button id="createStylesheetSubmit" value="Create">
 					<xp:eventHandler event="onclick" submit="false">
 						<xp:this.script><![CDATA[
-							var deferred = DesignServices.createStylesheet("#{javascript:databaseDocumentId}", dojo.byId("#{id:newStylesheetName}").value)
+							var deferred = DesignServices.createStyleSheet("#{javascript:databaseDocumentId}", dojo.byId("#{id:newStylesheetName}").value)
 							deferred.addCallback(function(unid) {
 								XSP.closeDialog("#{id:createStylesheetDialog}")
 								

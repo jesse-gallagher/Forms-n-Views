@@ -2,8 +2,10 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 	
 	<xp:this.dataContexts>
-		<xp:dataContext var="designNote" value="${javascript: new frostillicus.dxl.Stylesheet(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
+		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getStyleSheet(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
 		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -12,7 +14,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:designNote.uniqueKey}") {
+			if(data.message == "#{javascript:uniqueKey}") {
 				fnv_mark_clean("#{id:stylesheetPane}")
 			}
 		})
@@ -53,7 +55,7 @@
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>
-			<xp:text value="#{designNote.xml}" styleClass="dxl"/>
+			<xp:text value="#{designNote.dxlString}" styleClass="dxl"/>
 		</xc:djTitlePane>
 	</xp:panel>
 </xp:view>

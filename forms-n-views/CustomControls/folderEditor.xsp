@@ -2,8 +2,10 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 	
 	<xp:this.dataContexts>
-		<xp:dataContext var="designNote" value="${javascript: new frostillicus.dxl.Folder(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
+		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getFolder(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
 		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -11,7 +13,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:designNote.uniqueKey}") {
+			if(data.message == "#{javascript:uniqueKey}") {
 				fnv_mark_clean("#{id:folderPane}")
 			}
 		})
@@ -38,7 +40,7 @@
 					<xp:column>
 						<xp:this.facets>
 							<xp:link xp:key="footer">
-								<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true">
+								<xp:eventHandler event="onclick" themeId="Editor.Refresh">
 									<xp:this.action><![CDATA[#{designNote.addColumn}]]></xp:this.action>
 									<xp:this.script><![CDATA[fnv_mark_dirty("#{id:folderPane}")]]></xp:this.script>
 								</xp:eventHandler>
@@ -46,7 +48,7 @@
 							</xp:link>
 						</xp:this.facets>
 						<xp:link id="link1">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh">
 								<xp:this.action><![CDATA[#{javascript:designNote.removeColumn(columnIndex)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:folderPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -55,7 +57,7 @@
 					</xp:column>
 					<xp:column>
 						<xp:link id="moveUp" rendered="#{columnIndex != 0}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex-1)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:folderPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -64,7 +66,7 @@
 					</xp:column>
 					<xp:column>
 						<xp:link id="moveDown" rendered="#{javascript:columnIndex != getComponent('viewColumns').getRowCount()-1}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex+1)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:folderPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -73,7 +75,15 @@
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Item Name"/></xp:this.facets>
-						<xe:djTextBox value="#{columnNode.itemName}" onKeyPress="fnv_mark_dirty('#{id:folderPane}')" validator="#{editorController.validateItemName}"/>
+						<xe:djTextBox value="#{columnNode.itemName}" onKeyPress="fnv_mark_dirty('#{id:viewPane}')"
+							required="true" validator="#{editorController.validateItemName}">
+							<xe:this.onChange><![CDATA[
+								var formula = dijit.byId("#{id:columnFormula}")
+								if(formula.get("value") == "") {
+									formula.set("value", this.value)
+								}
+							]]></xe:this.onChange>
+						</xe:djTextBox>
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Sort"/></xp:this.facets>
@@ -85,7 +95,8 @@
 					</xp:column>
 					<xp:column style="width: 100%">
 						<xp:this.facets><xp:text xp:key="header" value="Formula"/></xp:this.facets>
-						<xe:djTextarea value="#{columnNode.formula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:folderPane}')" validator="#{editorController.validateFormula}"/>
+						<xe:djTextarea id="columnFormula" value="#{columnNode.formula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:folderPane}')"
+							required="true" validator="#{editorController.validateFormula}"/>
 					</xp:column>
 					<xp:column styleClass="advanced">
 						<xp:link id="columnAdvanced">
@@ -135,7 +146,7 @@
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>
-			<xp:text value="#{designNote.xml}" styleClass="dxl"/>
+			<xp:text value="#{designNote.dxlString}" styleClass="dxl"/>
 		</xc:djTitlePane>
 		
 	</xp:panel>

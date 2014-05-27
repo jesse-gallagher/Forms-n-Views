@@ -5,13 +5,13 @@
 	
 	<xe:jsonRpcService id="jsonRpcService1" serviceName="DesignServices">
 		<xe:this.methods>
-			<xe:remoteMethod name="createStylesheet">
+			<xe:remoteMethod name="createStyleSheet">
 				<xe:this.arguments>
 					<xe:remoteMethodArg name="databaseDocumentId" type="string"></xe:remoteMethodArg>
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.dxl.Stylesheet.create(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createStyleSheet(databaseDocumentId, name)
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createView">
@@ -29,7 +29,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.dxl.Folder.create(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createFolder(databaseDocumentId, name)
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createForm">
@@ -38,7 +38,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.dxl.Form.create(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createForm(databaseDocumentId, name)
 				]]></xe:this.script>
 			</xe:remoteMethod>
 		</xe:this.methods>
