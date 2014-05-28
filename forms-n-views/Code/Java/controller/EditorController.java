@@ -1,4 +1,4 @@
-package frostillicus;
+package controller;
 
 import java.io.*;
 import java.util.*;
@@ -9,8 +9,11 @@ import javax.faces.context.FacesContext;
 import org.openntf.domino.*;
 import org.openntf.domino.design.*;
 
-public class EditorController implements Serializable {
-	private static final long serialVersionUID = 2190279771794028971L;
+import frostillicus.FNVUtil;
+import frostillicus.controller.BasicXPageController;
+
+public class EditorController extends BasicXPageController {
+	private static final long serialVersionUID = 1L;
 
 	public String save() {
 		try {

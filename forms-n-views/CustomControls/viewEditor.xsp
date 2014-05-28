@@ -3,7 +3,7 @@
 
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'View') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="controller" value="${javascript: new controller.EditorController()}"/>
 		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
 		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
@@ -25,7 +25,7 @@
 			<xp:this.facets>
 				<xp:panel xp:key="footer">
 					<xp:button id="saveDesign" value="Save">
-						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{editorController.save}"/>
+						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{controller.save}"/>
 					</xp:button>
 				</xp:panel>
 			</xp:this.facets>
@@ -40,111 +40,7 @@
 				<xe:djTextarea id="viewSelectionFormula" value="#{designNote.selectionFormula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:viewPane}')"/>
 			</xe:formRow>
 			<xe:formRow label="Columns" for="viewColumns" labelPosition="above">
-				<xp:dataTable id="viewColumns" value="#{designNote.columns}" var="columnNode" indexVar="columnIndex" rows="10000">
-					<xp:column>
-						<xp:this.facets>
-							<xp:link xp:key="footer">
-								<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
-									<xp:this.action><![CDATA[#{designNote.addColumn}]]></xp:this.action>
-									<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
-								</xp:eventHandler>
-								<xp:image url="/tango/list-add.svg" styleClass="addRemove" />
-							</xp:link>
-						</xp:this.facets>
-						<xp:link id="link1">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
-								<xp:this.action><![CDATA[#{javascript:designNote.getColumns().remove(columnIndex)}]]></xp:this.action>
-								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
-							</xp:eventHandler>
-							<xp:image url="/tango/list-remove.svg" styleClass="addRemove" />
-						</xp:link>
-					</xp:column>
-					<xp:column>
-						<xp:link id="moveUp" rendered="#{columnIndex != 0}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
-								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex-1)}]]></xp:this.action>
-								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
-							</xp:eventHandler>
-							<xp:image url="/tango/go-up.png" styleClass="addRemove" />
-						</xp:link>
-					</xp:column>
-					<xp:column>
-						<xp:link id="moveDown" rendered="#{javascript:columnIndex != getComponent('viewColumns').getRowCount()-1}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
-								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex+1)}]]></xp:this.action>
-								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
-							</xp:eventHandler>
-							<xp:image url="/tango/go-down.png" styleClass="addRemove" />
-						</xp:link>
-					</xp:column>
-					<xp:column>
-						<xp:this.facets><xp:text xp:key="header" value="Item Name"/></xp:this.facets>
-						<xe:djTextBox value="#{columnNode.itemName}" onKeyPress="fnv_mark_dirty('#{id:viewPane}')"
-							required="true" validator="#{editorController.validateItemName}">
-							<xe:this.onChange><![CDATA[
-								var formula = dijit.byId("#{id:columnFormula}")
-								if(formula.get("value") == "") {
-									formula.set("value", this.value)
-								}
-							]]></xe:this.onChange>
-						</xe:djTextBox>
-					</xp:column>
-					<xp:column>
-						<xp:this.facets><xp:text xp:key="header" value="Sort"/></xp:this.facets>
-						<xp:comboBox value="#{columnNode.sortOrder}" onchange="fnv_mark_dirty('#{id:viewPane}')">
-							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
-							<xp:selectItem itemLabel="None" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.NONE}" />
-							<xp:selectItem itemLabel="Ascending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.ASCENDING}"/>
-							<xp:selectItem itemLabel="Descending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.DESCENDING}"/>
-						</xp:comboBox>
-					</xp:column>
-					<xp:column style="width: 100%">
-						<xp:this.facets><xp:text xp:key="header" value="Formula"/></xp:this.facets>
-						<xp:label for="columnFormula" value="#{column.itemName}" rendered="false"/>
-						<xe:djTextarea id="columnFormula" value="#{columnNode.formula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:viewPane}')"
-							required="true" validator="#{editorController.validateFormula}" defaultValue="#{columnNode.formula}"/>
-					</xp:column>
-					<xp:column styleClass="advanced">
-						<xp:link id="columnAdvanced">
-							<xp:image url="/tango/applications-system-16x16.png"/>
-							<xp:eventHandler event="onclick" submit="false">
-								<xp:this.script><![CDATA[
-									XSP.openDialog("#{id:columnAdvancedDialog}")
-								]]></xp:this.script>
-							</xp:eventHandler>
-						</xp:link>
-						<xe:dialog id="columnAdvancedDialog" title="Advanced Properties">
-							<xe:dialogContent>
-								<xe:formTable>
-									<xe:formRow label="Title">
-										<xp:inputText id="columnTitle" value="#{columnNode.title}">
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnTitle" disableValidators="true"
-												script="fnv_mark_dirty('#{id:viewPane}')" />
-										</xp:inputText>
-									</xe:formRow>
-									<xe:formRow label="Display">
-										<xp:checkBox id="columnResizable" value="#{columnNode.resizableString}" onclick="fnv_mark_dirty('#{id:viewPane}')">
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnResizable" disableValidators="true"/>
-										</xp:checkBox> <xp:label for="columnResizable" value="Resizable"/>
-										<br />
-										<xp:checkBox id="columnShowAsLinks" value="#{columnNode.showAsLinksString}" onclick="fnv_mark_dirty('#{id:viewPane}')">
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnShowAsLinks" disableValidators="true"/>
-										</xp:checkBox> <xp:label for="columnShowAsLinks" value="Show as links"/>
-									</xe:formRow>
-									<xe:formRow label="Sorting">
-										<xp:checkBox id="columnSortNoAccent" value="#{columnNode.sortNoAccentString}" onclick="fnv_mark_dirty('#{id:viewPane}')">
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnSortNoAccent" disableValidators="true"/>
-										</xp:checkBox> <xp:label for="columnSortNoAccent" value="Accent-insensitive sort"/>
-										<br />
-										<xp:checkBox id="columnSortNoCase" value="#{columnNode.sortNoCaseString}" onclick="fnv_mark_dirty('#{id:viewPane}')">
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="columnSortNoCase" disableValidators="true"/>
-										</xp:checkBox> <xp:label for="columnSortNoCase" value="Case-insensitive sort"/>
-									</xe:formRow>
-								</xe:formTable>
-							</xe:dialogContent>
-						</xe:dialog>
-					</xp:column>
-				</xp:dataTable>
+				<xc:viewColumnEditor value="#{designNote.columns}"/>
 			</xe:formRow>
 		</xe:formTable>
 		

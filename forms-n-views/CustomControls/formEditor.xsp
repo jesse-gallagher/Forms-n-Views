@@ -3,7 +3,7 @@
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'Form') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="editorController" value="${javascript: new controller.EditorController()}"/>
 		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
 		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
@@ -30,11 +30,17 @@
 				</xp:panel>
 			</xp:this.facets>
 			
-			<xe:formRow label="Name" for="designName">
+			<xe:formRow label="Name">
 				<xe:djTextBox id="designName" value="#{designNote.name}" onKeyPress="fnv_mark_dirty('#{id:formPane}')"/>
 			</xe:formRow>
-			<xe:formRow label="Alias" for="designAlias">
+			<xe:formRow label="Alias">
 				<xe:djTextBox id="designAlias" value="#{designNote.alias}" onKeyPress="fnv_mark_dirty('#{id:formPane}')"/>
+			</xe:formRow>
+			<xe:formRow label="Display XPage Instead">
+				<xe:djTextBox id="XPageAlt" value="#{designNote.XPageAlt}" onKeyPress="fnv_mark_dirty('#{id:formPane}')"/>
+			</xe:formRow>
+			<xe:formRow label="Display XPage Instead (Client)">
+				<xe:djTextBox id="XPageAltClient" value="#{designNote.XPageAltClient}" onKeyPress="fnv_mark_dirty('#{id:formPane}')"/>
 			</xe:formRow>
 			<xe:formRow label="Fields" for="fieldsList" labelPosition="above">
 				<xp:dataTable id="fieldsList" value="#{designNote.fields}" var="fieldNode" indexVar="fieldIndex" rows="10000">

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:this.data>
+		<xp:dominoDocument var="doc" action="openDocument" databaseName="Arcturus/Frost!!dev/fnv-playground-pelias" documentId="D4BE9545D709638185257CE600546973"/>
+	</xp:this.data>
+	<xp:text escape="false" value="#{doc.Body}"/>
+</xp:view>

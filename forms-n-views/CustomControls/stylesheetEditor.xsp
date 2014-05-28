@@ -3,14 +3,13 @@
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'StyleSheet') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="editorController" value="${javascript: new controller.EditorController()}"/>
 		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
 		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
 		getComponent("stylesheetPane").setTitle(designNote.getName())
-		//print(getComponent("stylesheetPane").tabUniqueKey)
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
