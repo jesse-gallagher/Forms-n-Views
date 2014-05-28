@@ -2,8 +2,10 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 	
 	<xp:this.dataContexts>
-		<xp:dataContext var="designNote" value="${javascript: new frostillicus.dxl.Form(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
+		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'Form') }"/>
 		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
+		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
+		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -11,7 +13,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:designNote.uniqueKey}") {
+			if(data.message == "#{javascript:uniqueKey}") {
 				fnv_mark_clean("#{id:formPane}")
 			}
 		})
@@ -35,7 +37,7 @@
 				<xe:djTextBox id="designAlias" value="#{designNote.alias}" onKeyPress="fnv_mark_dirty('#{id:formPane}')"/>
 			</xe:formRow>
 			<xe:formRow label="Fields" for="fieldsList" labelPosition="above">
-				<xp:dataTable id="fieldsList" value="#{javascript:designNote.fields}" var="fieldNode" indexVar="fieldIndex" rows="10000">
+				<xp:dataTable id="fieldsList" value="#{designNote.fields}" var="fieldNode" indexVar="fieldIndex" rows="10000">
 					<xp:column>
 						<xp:this.facets>
 							<xp:link xp:key="footer">
@@ -48,7 +50,7 @@
 						</xp:this.facets>
 						<xp:link id="remove">
 							<xp:eventHandler event="onclick" themeId="Editor.Refresh" immediate="true" disableValidators="true">
-								<xp:this.action><![CDATA[#{javascript:designNote.removeField(fieldIndex)}]]></xp:this.action>
+								<xp:this.action><![CDATA[#{javascript:designNote.getFields().remove(fieldIndex)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:formPane}")]]></xp:this.script>
 							</xp:eventHandler>
 							<xp:image url="/tango/list-remove.svg" styleClass="addRemove" />
@@ -78,37 +80,39 @@
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Type"/></xp:this.facets>
-						<xp:comboBox value="#{fieldNode.fieldType}" defaultValue="text">
+						<xp:comboBox value="#{fieldNode.fieldType}" defaultValue="TEXT" id="fieldType">
+							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
 							<xp:eventHandler event="onchange" themeId="Editor.Refresh">
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:formPane}")]]></xp:this.script>
 							</xp:eventHandler>
 							
-							<xp:selectItem itemLabel="Text" itemValue="text"/>
-							<xp:selectItem itemLabel="Date/Time" itemValue="datetime"/>
-							<xp:selectItem itemLabel="Number" itemValue="number"/>
-							<xp:selectItem itemLabel="Dialog List" itemValue="dialoglist"/>
-							<xp:selectItem itemLabel="Checkbox" itemValue="checkbox"/>
-							<xp:selectItem itemLabel="Radio button" itemValue="radiobutton"/>
-							<xp:selectItem itemLabel="Combobox" itemValue="combobox"/>
-							<xp:selectItem itemLabel="Rich Text" itemValue="richtext"/>
-							<xp:selectItem itemLabel="Authors" itemValue="authors"/>
-							<xp:selectItem itemLabel="Names" itemValue="names"/>
-							<xp:selectItem itemLabel="Readers" itemValue="readers"/>
-							<xp:selectItem itemLabel="Password" itemValue="password"/>
-							<xp:selectItem itemLabel="Formula" itemValue="formula"/>
-							<xp:selectItem itemLabel="Time zone" itemValue="timezone"/>
-							<xp:selectItem itemLabel="Rich Text Lite" itemValue="richtextlite"/>
-							<xp:selectItem itemLabel="Color" itemValue="color"/>
+							<xp:selectItem itemLabel="Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TEXT}"/>
+							<xp:selectItem itemLabel="Date/Time" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DATETIME}"/>
+							<xp:selectItem itemLabel="Number" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NUMBER}"/>
+							<xp:selectItem itemLabel="Dialog List" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DIALOGLIST}"/>
+							<xp:selectItem itemLabel="Checkbox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.CHECKBOX}"/>
+							<xp:selectItem itemLabel="Radio button" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RADIOBUTTON}"/>
+							<xp:selectItem itemLabel="Combobox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COMBOBOX}"/>
+							<xp:selectItem itemLabel="Rich Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXT}"/>
+							<xp:selectItem itemLabel="Authors" itemValue="${javascript:org.openntf.domino.design.FormField.Type.AUTHORS}"/>
+							<xp:selectItem itemLabel="Names" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NAMES}"/>
+							<xp:selectItem itemLabel="Readers" itemValue="${javascript:org.openntf.domino.design.FormField.Type.READERS}"/>
+							<xp:selectItem itemLabel="Password" itemValue="${javascript:org.openntf.domino.design.FormField.Type.PASSWORD}"/>
+							<xp:selectItem itemLabel="Formula" itemValue="${javascript:org.openntf.domino.design.FormField.Type.FORMULA}"/>
+							<xp:selectItem itemLabel="Time zone" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TIMEZONE}"/>
+							<xp:selectItem itemLabel="Rich Text Lite" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXTLITE}"/>
+							<xp:selectItem itemLabel="Color" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COLOR}"/>
 						</xp:comboBox>
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Kind"/></xp:this.facets>
-						<xp:comboBox value="#{fieldNode.kind}" defaultValue="editable" disabled="#{fieldNode.fieldType == 'password'}"
+						<xp:comboBox value="#{fieldNode.kind}" defaultValue="EDITABLE" disabled="#{fieldNode.fieldType == 'PASSWORD'}"
 							onchange="fnv_mark_dirty('#{id:folderPane}')">
-							<xp:selectItem itemLabel="Editable" itemValue="editable"/>
-							<xp:selectItem itemLabel="Computed" itemValue="computed"/>
-							<xp:selectItem itemLabel="Computed for display" itemValue="computedfordisplay" itemDisabled="#{(fieldNode.fieldType != 'richtext' || fieldNode.fieldType != 'richtextlite')}"/>
-							<xp:selectItem itemLabel="Computed when composed" itemValue="computedwhencomposed" itemDisabled="#{(fieldNode.fieldType != 'richtext' || fieldNode.fieldType != 'richtextlite')}"/>
+							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
+							<xp:selectItem itemLabel="Editable" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.EDITABLE}"/>
+							<xp:selectItem itemLabel="Computed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTED}"/>
+							<xp:selectItem itemLabel="Computed for display" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDFORDISPLAY}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>
+							<xp:selectItem itemLabel="Computed when composed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDWHENCOMPOSED}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>
 						</xp:comboBox>
 					</xp:column>
 					<xp:column style="width: 100%">
@@ -128,31 +132,31 @@
 							<xe:dialogContent>
 								<xe:formTable>
 									<xe:formRow label="Data">
-										<xp:checkBox id="fieldProtected" value="#{fieldNode.protectedString}" onclick="fnv_mark_dirty('#{id:formPane}')">
+										<xp:checkBox id="fieldProtected" value="#{fieldNode.protected}" onclick="fnv_mark_dirty('#{id:formPane}')">
 											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldProtected"/>
 										</xp:checkBox> <xp:label for="fieldProtected" value="Protected"/>
 										<br />
-										<xp:checkBox id="fieldSign" value="#{fieldNode.signString}" onclick="fnv_mark_dirty('#{id:formPane}')">
+										<xp:checkBox id="fieldSign" value="#{fieldNode.sign}" onclick="fnv_mark_dirty('#{id:formPane}')">
 											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldSign"/>
 										</xp:checkBox> <xp:label for="fieldSign" value="Sign"/>
 										<br />
-										<xp:checkBox id="fieldSeal" value="#{fieldNode.sealString}" onclick="fnv_mark_dirty('#{id:formPane}')">
+										<xp:checkBox id="fieldSeal" value="#{fieldNode.seal}" onclick="fnv_mark_dirty('#{id:formPane}')">
 											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldSeal"/>
 										</xp:checkBox> <xp:label for="fieldSeal" value="Seal"/>
 									</xe:formRow>
 									<xe:formRow label="Options">
-										<xp:checkBox id="fieldLookUpEachChar" value="#{fieldNode.lookUpEachCharString}" onclick="fnv_mark_dirty('#{id:formPane}')">
+										<xp:checkBox id="fieldLookUpEachChar" value="#{fieldNode.lookUpEachChar}" onclick="fnv_mark_dirty('#{id:formPane}')">
 											<xp:this.disabled><![CDATA[#{javascript:
-												!@IsMember(fieldNode.fieldType, ["readers", "authors", "names"])
+												!@IsMember(fieldNode.fieldType.toString(), ["READERS", "AUTHORS", "NAMES"])
 											}]]></xp:this.disabled>
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldProtected"/>
+											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldLookUpEachChar"/>
 										</xp:checkBox> <xp:label for="fieldLookUpEachChar" value="Look up names as each character is entered"/>
 										<br />
-										<xp:checkBox id="fieldLookUpAddress" value="#{fieldNode.lookUpAddressOnRefreshString}" onclick="fnv_mark_dirty('#{id:formPane}')">
+										<xp:checkBox id="fieldLookUpAddress" value="#{fieldNode.lookUpAddressOnRefresh}" onclick="fnv_mark_dirty('#{id:formPane}')">
 											<xp:this.disabled><![CDATA[#{javascript:
-												!@IsMember(fieldNode.fieldType, ["readers", "authors", "names"])
+												!@IsMember(fieldNode.fieldType.toString(), ["READERS", "AUTHORS", "NAMES"])
 											}]]></xp:this.disabled>
-											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldProtected"/>
+											<xp:eventHandler event="onchange" submit="true" refreshMode="norefresh" execMode="partial" execId="fieldLookUpAddress"/>
 										</xp:checkBox> <xp:label for="fieldLookUpAddress" value="Look up addresses on document refresh"/>
 									</xe:formRow>
 								</xe:formTable>
@@ -169,7 +173,7 @@
 			<xp:button id="refreshMe" value="Refresh">
 				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="dxlPreview" disableValidators="true" />
 			</xp:button>
-			<xp:text value="#{designNote.xml}" styleClass="dxl"/>
+			<xp:text value="#{designNote.dxlString}" styleClass="dxl"/>
 		</xc:djTitlePane>
 	</xp:panel>
 </xp:view>

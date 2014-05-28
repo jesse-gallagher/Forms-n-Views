@@ -2,7 +2,7 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 	
 	<xp:this.dataContexts>
-		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getFolder(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
+		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'Folder') }"/>
 		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
 		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
 		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>

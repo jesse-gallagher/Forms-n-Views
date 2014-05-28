@@ -2,7 +2,7 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 
 	<xp:this.dataContexts>
-		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getView(compositeData.databaseDocumentId, compositeData.designDocumentId) }"/>
+		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'View') }"/>
 		<xp:dataContext var="editorController" value="${javascript: new frostillicus.EditorController()}"/>
 		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
 		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
@@ -44,7 +44,7 @@
 					<xp:column>
 						<xp:this.facets>
 							<xp:link xp:key="footer">
-								<xp:eventHandler event="onclick" themeId="Editor.Refresh" execMode="partial" execId="editorPanel" disableValidators="true">
+								<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 									<xp:this.action><![CDATA[#{designNote.addColumn}]]></xp:this.action>
 									<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
 								</xp:eventHandler>
@@ -52,7 +52,7 @@
 							</xp:link>
 						</xp:this.facets>
 						<xp:link id="link1">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" execMode="partial" execId="editorPanel" disableValidators="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.getColumns().remove(columnIndex)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -61,7 +61,7 @@
 					</xp:column>
 					<xp:column>
 						<xp:link id="moveUp" rendered="#{columnIndex != 0}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" execMode="partial" execId="editorPanel" disableValidators="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex-1)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -70,7 +70,7 @@
 					</xp:column>
 					<xp:column>
 						<xp:link id="moveDown" rendered="#{javascript:columnIndex != getComponent('viewColumns').getRowCount()-1}">
-							<xp:eventHandler event="onclick" themeId="Editor.Refresh" execMode="partial" execId="editorPanel" disableValidators="true">
+							<xp:eventHandler event="onclick" themeId="Editor.Refresh" disableValidators="true">
 								<xp:this.action><![CDATA[#{javascript:designNote.swapColumns(columnIndex, columnIndex+1)}]]></xp:this.action>
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:viewPane}")]]></xp:this.script>
 							</xp:eventHandler>
@@ -91,10 +91,11 @@
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Sort"/></xp:this.facets>
-						<xp:comboBox value="#{columnNode.sort}" defaultValue="" onchange="fnv_mark_dirty('#{id:viewPane}')">
-							<xp:selectItem itemLabel="None" itemValue="none" />
-							<xp:selectItem itemLabel="Ascending" itemValue="ascending"/>
-							<xp:selectItem itemLabel="Descending" itemValue="descending"/>
+						<xp:comboBox value="#{columnNode.sortOrder}" onchange="fnv_mark_dirty('#{id:viewPane}')">
+							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
+							<xp:selectItem itemLabel="None" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.NONE}" />
+							<xp:selectItem itemLabel="Ascending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.ASCENDING}"/>
+							<xp:selectItem itemLabel="Descending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.DESCENDING}"/>
 						</xp:comboBox>
 					</xp:column>
 					<xp:column style="width: 100%">

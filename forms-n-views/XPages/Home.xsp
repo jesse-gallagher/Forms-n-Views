@@ -11,7 +11,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.DesignAssistant.createStyleSheet(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createElement(databaseDocumentId, name, "StyleSheet")
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createView">
@@ -20,7 +20,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.DesignAssistant.createView(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createElement(databaseDocumentId, name, "View")
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createFolder">
@@ -29,7 +29,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.DesignAssistant.createFolder(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createElement(databaseDocumentId, name, "Folder")
 				]]></xe:this.script>
 			</xe:remoteMethod>
 			<xe:remoteMethod name="createForm">
@@ -38,7 +38,7 @@
 					<xe:remoteMethodArg name="name" type="string"></xe:remoteMethodArg>
 				</xe:this.arguments>
 				<xe:this.script><![CDATA[
-					return frostillicus.DesignAssistant.createForm(databaseDocumentId, name)
+					return frostillicus.DesignAssistant.createElement(databaseDocumentId, name, "Form")
 				]]></xe:this.script>
 			</xe:remoteMethod>
 		</xe:this.methods>
