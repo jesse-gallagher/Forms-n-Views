@@ -53,10 +53,11 @@
 			<xp:this.facets><xp:text xp:key="header" value="Sort"/></xp:this.facets>
 			<xp:comboBox value="#{columnNode.sortOrder}" onchange="fnv_mark_dirty('#{id:viewPane}')">
 				<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
-				<xp:selectItem itemLabel="None" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.NONE}" />
-				<xp:selectItem itemLabel="Ascending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.ASCENDING}"/>
-				<xp:selectItem itemLabel="Descending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.DESCENDING}"/>
+				<xp:selectItems value="${enumItems['org.openntf.domino.design.DesignColumn$SortOrder']}"/>
 			</xp:comboBox>
+<!--				<xp:selectItem itemLabel="None" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.NONE}" />-->
+<!--				<xp:selectItem itemLabel="Ascending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.ASCENDING}"/>-->
+<!--				<xp:selectItem itemLabel="Descending" itemValue="${javascript:org.openntf.domino.design.DesignColumn.SortOrder.DESCENDING}"/>-->
 		</xp:column>
 		<xp:column style="width: 100%">
 			<xp:this.facets><xp:text xp:key="header" value="Formula"/></xp:this.facets>

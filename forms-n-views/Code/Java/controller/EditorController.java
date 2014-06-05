@@ -10,15 +10,17 @@ import org.openntf.domino.*;
 import org.openntf.domino.design.*;
 
 import frostillicus.FNVUtil;
-import frostillicus.controller.BasicXPageController;
+import frostillicus.xsp.controller.BasicXPageController;
 
 public class EditorController extends BasicXPageController {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unchecked")
 	public String save() {
 		try {
 			DesignBase note = (DesignBase)FNVUtil.resolveVariable("designNote");
-			note.reattach(FNVUtil.getDatabaseForDocumentId((String)FNVUtil.resolveVariable("databaseDocumentId")));
+			Map<String, Object> compositeData = (Map<String, Object>)resolveVariable("compositeData");
+			note.reattach(FNVUtil.getDatabaseForDocumentId((String)compositeData.get("databaseDocumentId")));
 			boolean result = note.save();
 			if(result) {
 				FNVUtil.toaster("Saved successfully!");
@@ -34,6 +36,12 @@ public class EditorController extends BasicXPageController {
 
 			return "xsp-failure";
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public String getUniqueKey() {
+		Map<String, Object> compositeData = (Map<String, Object>)resolveVariable("compositeData");
+		return "" + compositeData.get("databaseDocumentId") + compositeData.get("designDocumentId");
 	}
 
 	public void validateFormula(final FacesContext facesContext, final UIComponent component, final Object value) {

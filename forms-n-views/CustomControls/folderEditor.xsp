@@ -3,9 +3,7 @@
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'Folder') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new controller.EditorController()}"/>
-		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
-		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
+		<xp:dataContext var="controller" value="${javascript: new controller.EditorController()}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -13,7 +11,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:uniqueKey}") {
+			if(data.message == "#{javascript:controller.uniqueKey}") {
 				fnv_mark_clean("#{id:folderPane}")
 			}
 		})
@@ -24,7 +22,7 @@
 			<xp:this.facets>
 				<xp:panel xp:key="footer">
 					<xp:button id="saveDesign" value="Save">
-						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{editorController.save}"/>
+						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{controller.save}"/>
 					</xp:button>
 				</xp:panel>
 			</xp:this.facets>

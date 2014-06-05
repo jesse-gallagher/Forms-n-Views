@@ -3,9 +3,7 @@
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'StyleSheet') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new controller.EditorController()}"/>
-		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
-		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
+		<xp:dataContext var="controller" value="${javascript: new controller.EditorController()}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -13,7 +11,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:uniqueKey}") {
+			if(data.message == "#{javascript:controller.uniqueKey}") {
 				fnv_mark_clean("#{id:stylesheetPane}")
 			}
 		})
@@ -26,7 +24,7 @@
 			<xp:this.facets>
 				<xp:panel xp:key="footer">
 					<xp:button id="saveView" value="Save" styleClass="saveButton lotusBtn">
-						<xp:eventHandler event="onclick" themeId="Editor.Refresh" action="#{editorController.save}">
+						<xp:eventHandler event="onclick" themeId="Editor.Refresh" action="#{controller.save}">
 							<xp:this.script><![CDATA[
 								var editorId = "#{id:ssContent}"
 								dojo.byId(editorId).value = document["codemirror-" + editorId].getValue()

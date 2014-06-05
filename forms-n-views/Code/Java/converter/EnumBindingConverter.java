@@ -10,7 +10,7 @@ public class EnumBindingConverter implements Converter {
 	@SuppressWarnings("unchecked")
 	public Object getAsObject(final FacesContext facesContext, final UIComponent component, final String value) {
 		ValueBinding binding = component.getValueBinding("value");
-		Class<Enum> enumType = binding.getType(facesContext);
+		Class<? extends Enum> enumType = binding.getType(facesContext);
 
 		return Enum.valueOf(enumType, value);
 	}

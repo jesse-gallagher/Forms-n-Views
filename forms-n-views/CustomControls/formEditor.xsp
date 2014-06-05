@@ -3,9 +3,7 @@
 	
 	<xp:this.dataContexts>
 		<xp:dataContext var="designNote" value="${javascript: frostillicus.DesignAssistant.getElement(compositeData.databaseDocumentId, compositeData.designDocumentId, 'Form') }"/>
-		<xp:dataContext var="editorController" value="${javascript: new controller.EditorController()}"/>
-		<xp:dataContext var="databaseDocumentId" value="${compositeData.databaseDocumentId}"/>
-		<xp:dataContext var="uniqueKey" value="${javascript:compositeData.databaseDocumentId+compositeData.designDocumentId}"/>
+		<xp:dataContext var="controller" value="${javascript: new controller.EditorController()}"/>
 	</xp:this.dataContexts>
 	
 	<xp:this.afterPageLoad><![CDATA[#{javascript:
@@ -13,7 +11,7 @@
 	}]]></xp:this.afterPageLoad>
 	<xp:eventHandler event="onClientLoad" submit="false"><xp:this.script><![CDATA[
 		dojo.subscribe("/save/success", function(data) {
-			if(data.message == "#{javascript:uniqueKey}") {
+			if(data.message == "#{javascript:controller.uniqueKey}") {
 				fnv_mark_clean("#{id:formPane}")
 			}
 		})
@@ -25,7 +23,7 @@
 			<xp:this.facets>
 				<xp:panel xp:key="footer">
 					<xp:button id="saveDesign" value="Save">
-						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{editorController.save}"/>
+						<xp:eventHandler event="onclick" themeId="Editor.Save" action="#{controller.save}"/>
 					</xp:button>
 				</xp:panel>
 			</xp:this.facets>
@@ -82,32 +80,33 @@
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Name"/></xp:this.facets>
-						<xe:djTextBox value="#{fieldNode.name}" onKeyPress="fnv_mark_dirty('#{id:formPane}')" validator="#{editorController.validateItemName}"/>
+						<xe:djTextBox value="#{fieldNode.name}" onKeyPress="fnv_mark_dirty('#{id:formPane}')" validator="#{controller.validateItemName}"/>
 					</xp:column>
 					<xp:column>
 						<xp:this.facets><xp:text xp:key="header" value="Type"/></xp:this.facets>
-						<xp:comboBox value="#{fieldNode.fieldType}" defaultValue="TEXT" id="fieldType">
+						<xp:comboBox value="#{fieldNode.fieldType}" id="fieldType">
 							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
 							<xp:eventHandler event="onchange" themeId="Editor.Refresh">
 								<xp:this.script><![CDATA[fnv_mark_dirty("#{id:formPane}")]]></xp:this.script>
 							</xp:eventHandler>
+							<xp:selectItems value="${enumItems['org.openntf.domino.design.FormField$Type']}"/>
 							
-							<xp:selectItem itemLabel="Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TEXT}"/>
-							<xp:selectItem itemLabel="Date/Time" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DATETIME}"/>
-							<xp:selectItem itemLabel="Number" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NUMBER}"/>
-							<xp:selectItem itemLabel="Dialog List" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DIALOGLIST}"/>
-							<xp:selectItem itemLabel="Checkbox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.CHECKBOX}"/>
-							<xp:selectItem itemLabel="Radio button" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RADIOBUTTON}"/>
-							<xp:selectItem itemLabel="Combobox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COMBOBOX}"/>
-							<xp:selectItem itemLabel="Rich Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXT}"/>
-							<xp:selectItem itemLabel="Authors" itemValue="${javascript:org.openntf.domino.design.FormField.Type.AUTHORS}"/>
-							<xp:selectItem itemLabel="Names" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NAMES}"/>
-							<xp:selectItem itemLabel="Readers" itemValue="${javascript:org.openntf.domino.design.FormField.Type.READERS}"/>
-							<xp:selectItem itemLabel="Password" itemValue="${javascript:org.openntf.domino.design.FormField.Type.PASSWORD}"/>
-							<xp:selectItem itemLabel="Formula" itemValue="${javascript:org.openntf.domino.design.FormField.Type.FORMULA}"/>
-							<xp:selectItem itemLabel="Time zone" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TIMEZONE}"/>
-							<xp:selectItem itemLabel="Rich Text Lite" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXTLITE}"/>
-							<xp:selectItem itemLabel="Color" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COLOR}"/>
+<!--							<xp:selectItem itemLabel="Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TEXT}"/>-->
+<!--							<xp:selectItem itemLabel="Date/Time" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DATETIME}"/>-->
+<!--							<xp:selectItem itemLabel="Number" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NUMBER}"/>-->
+<!--							<xp:selectItem itemLabel="Dialog List" itemValue="${javascript:org.openntf.domino.design.FormField.Type.DIALOGLIST}"/>-->
+<!--							<xp:selectItem itemLabel="Checkbox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.CHECKBOX}"/>-->
+<!--							<xp:selectItem itemLabel="Radio button" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RADIOBUTTON}"/>-->
+<!--							<xp:selectItem itemLabel="Combobox" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COMBOBOX}"/>-->
+<!--							<xp:selectItem itemLabel="Rich Text" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXT}"/>-->
+<!--							<xp:selectItem itemLabel="Authors" itemValue="${javascript:org.openntf.domino.design.FormField.Type.AUTHORS}"/>-->
+<!--							<xp:selectItem itemLabel="Names" itemValue="${javascript:org.openntf.domino.design.FormField.Type.NAMES}"/>-->
+<!--							<xp:selectItem itemLabel="Readers" itemValue="${javascript:org.openntf.domino.design.FormField.Type.READERS}"/>-->
+<!--							<xp:selectItem itemLabel="Password" itemValue="${javascript:org.openntf.domino.design.FormField.Type.PASSWORD}"/>-->
+<!--							<xp:selectItem itemLabel="Formula" itemValue="${javascript:org.openntf.domino.design.FormField.Type.FORMULA}"/>-->
+<!--							<xp:selectItem itemLabel="Time zone" itemValue="${javascript:org.openntf.domino.design.FormField.Type.TIMEZONE}"/>-->
+<!--							<xp:selectItem itemLabel="Rich Text Lite" itemValue="${javascript:org.openntf.domino.design.FormField.Type.RICHTEXTLITE}"/>-->
+<!--							<xp:selectItem itemLabel="Color" itemValue="${javascript:org.openntf.domino.design.FormField.Type.COLOR}"/>-->
 						</xp:comboBox>
 					</xp:column>
 					<xp:column>
@@ -115,15 +114,16 @@
 						<xp:comboBox value="#{fieldNode.kind}" defaultValue="EDITABLE" disabled="#{fieldNode.fieldType == 'PASSWORD'}"
 							onchange="fnv_mark_dirty('#{id:folderPane}')">
 							<xp:this.converter><xp:converter converterId="enumBindingConverter"/></xp:this.converter>
-							<xp:selectItem itemLabel="Editable" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.EDITABLE}"/>
-							<xp:selectItem itemLabel="Computed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTED}"/>
-							<xp:selectItem itemLabel="Computed for display" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDFORDISPLAY}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>
-							<xp:selectItem itemLabel="Computed when composed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDWHENCOMPOSED}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>
+							<xp:selectItems value="${enumItems['org.openntf.domino.design.FormField$Kind']}"/>
+<!--							<xp:selectItem itemLabel="Editable" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.EDITABLE}"/>-->
+<!--							<xp:selectItem itemLabel="Computed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTED}"/>-->
+<!--							<xp:selectItem itemLabel="Computed for display" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDFORDISPLAY}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>-->
+<!--							<xp:selectItem itemLabel="Computed when composed" itemValue="${javascript:org.openntf.domino.design.FormField.Kind.COMPUTEDWHENCOMPOSED}" itemDisabled="#{fieldNode.fieldType == 'RICHTEXT' || fieldNode.fieldType == 'RICHTEXTLITE'}"/>-->
 						</xp:comboBox>
 					</xp:column>
 					<xp:column style="width: 100%">
 						<xp:this.facets><xp:text xp:key="header" value="Default/Computed Formula"/></xp:this.facets>
-						<xe:djTextarea id="fieldFormula" value="#{fieldNode.defaultValueFormula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:formPane}')" validator="#{editorController.validateFormula}"/>
+						<xe:djTextarea id="fieldFormula" value="#{fieldNode.defaultValueFormula}" styleClass="code" onKeyPress="fnv_mark_dirty('#{id:formPane}')" validator="#{controller.validateFormula}"/>
 					</xp:column>
 					<xp:column styleClass="advanced">
 						<xp:link id="fieldAdvanced">

@@ -10,6 +10,9 @@
     <managed-bean-class>java.util.HashMap</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
+  <application>
+  	<variable-resolver>frostillicus.bean.AnnotatedBeanResolver</variable-resolver>
+  </application>
   <lifecycle>
     <phase-listener>frostillicus.FlashScopePhaseListener</phase-listener>
   </lifecycle>

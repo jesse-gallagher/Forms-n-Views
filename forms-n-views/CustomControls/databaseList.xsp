@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex" xmlns:xc="http://www.ibm.com/xsp/custom">
 	
-	<xp:this.data>
-		<xp:dominoView var="databasesView" ignoreRequestParams="true" viewName="#{'Databases'}"
-			categoryFilter="${context.user.name}" />
-	</xp:this.data>
+<!--	<xp:this.data>-->
+<!--		<xp:dominoView var="databasesView" ignoreRequestParams="true" viewName="#{'Databases'}"-->
+<!--			categoryFilter="${context.user.name}" />-->
+<!--	</xp:this.data>-->
+	<xp:this.dataContexts>
+		<xp:dataContext var="databasesView" value="#{Databases.mine}"/>
+	</xp:this.dataContexts>
 
 	<xp:repeat id="databaseListRepeat" value="#{databasesView}" var="databaseEntry" rows="1000">
 	
@@ -18,24 +21,13 @@
 						<xp:this.action><![CDATA[#{javascript:
 							var databaseDoc = databaseEntry.getDocument()
 							databaseDoc.remove(false)
-							databaseDoc.recycle()
-							databasesView.refresh()
 						}]]></xp:this.action>
 					</xp:eventHandler>
 				</xp:link>
 			
 				<xp:image url="tango/application-x-executable.svg" rendered="#{javascript:databaseEntry.getColumnValue('Server') != database.getServer()}"/>
-				<xp:image url="/.ibmxspres/domino/#{javascript:databaseEntry.getColumnValue('FilePath').replace('\\', '/') + '/$Icon'}" rendered="#{javascript:databaseEntry.getColumnValue('Server') == database.getServer()}"/>
-				<xp:text styleClass="title"><xp:this.value><![CDATA[#{javascript:
-					try {
-						var foreignDB = session.getDatabase(databaseEntry.getColumnValue("Server"), databaseEntry.getColumnValue("FilePath"))
-						var title = foreignDB.getTitle()
-						foreignDB.recycle()
-						return title
-					} catch(e) {
-						return "(Error opening database)"
-					}
-				}]]></xp:this.value></xp:text>
+				<xp:image url="/.ibmxspres/domino/#{javascript:databaseEntry.getColumnValue('FilePath').replace('\\', '/') + '/$Icon'}" rendered="#{databaseEntry.server == database.server}"/>
+				<xp:text styleClass="title" value="#{databaseEntry.database.title}"/>
 				<xp:span styleClass="path">
 					<xc:abbreviatedName value="#{databaseEntry.Server}"/>!!<xp:text value="#{databaseEntry.FilePath}"/>
 				</xp:span>
@@ -47,8 +39,8 @@
 							<xe:this.onClick><![CDATA[
 								dijit.byId("#{id:contentPane}").createTab({
 									content: "forms",
-									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
-									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'forms')}"
+									databaseDocumentId: "#{javascript:databaseEntry.getId()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getId(), 'forms')}"
 								})
 							]]></xe:this.onClick>
 						</xe:basicLeafNode>
@@ -56,8 +48,8 @@
 							<xe:this.onClick><![CDATA[
 								dijit.byId("#{id:contentPane}").createTab({
 									content: "views",
-									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
-									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'views')}"
+									databaseDocumentId: "#{javascript:databaseEntry.getId()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getId(), 'views')}"
 								})
 							]]></xe:this.onClick>
 						</xe:basicLeafNode>
@@ -65,8 +57,8 @@
 							<xe:this.onClick><![CDATA[
 								dijit.byId("#{id:contentPane}").createTab({
 									content: "folders",
-									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
-									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'folders')}"
+									databaseDocumentId: "#{javascript:databaseEntry.getId()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getId(), 'folders')}"
 								})
 							]]></xe:this.onClick>
 						</xe:basicLeafNode>
@@ -74,8 +66,8 @@
 							<xe:this.onClick><![CDATA[
 								dijit.byId("#{id:contentPane}").createTab({
 									content: "stylesheets",
-									databaseDocumentId: "#{javascript:databaseEntry.getUniversalID()}",
-									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getUniversalID(), 'stylesheets')}"
+									databaseDocumentId: "#{javascript:databaseEntry.getId()}",
+									tabUniqueKey: "#{javascript:tabIndexManager.getIndex(databaseEntry.getId(), 'stylesheets')}"
 								})
 							]]></xe:this.onClick>
 						</xe:basicLeafNode>
